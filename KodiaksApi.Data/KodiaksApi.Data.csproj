@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KodiaksApi.Entity\KodiaksApi.Entity.csproj" />
+    <ProjectReference Include="..\KodiaksApi.Util\KodiaksApi.Util.csproj" />
+  </ItemGroup>
+
+</Project>
