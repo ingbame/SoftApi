@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KodiaksApi.Data.Context
 {
@@ -17,7 +12,7 @@ namespace KodiaksApi.Data.Context
                 .AddJsonFile("appsettings.json")
                 .Build();
             var builder = new DbContextOptionsBuilder<KodiaksDbContext>();
-            var connectionString = configuration.GetConnectionString("MuayThaiConn");
+            var connectionString = configuration.GetConnectionString("KodiaksDbConn");
             builder.UseSqlServer(connectionString);
             return new KodiaksDbContext(builder.Options);
         }
