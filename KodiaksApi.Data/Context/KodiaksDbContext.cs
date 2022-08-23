@@ -33,7 +33,7 @@ namespace KodiaksApi.Data.Context
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {            
+        {           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -108,6 +108,12 @@ namespace KodiaksApi.Data.Context
                     .HasForeignKey(d => d.CreatedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Fina_Bills_UserId");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Bills)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Fina_Bills_MemberId");
 
                 entity.HasOne(d => d.Method)
                     .WithMany(p => p.Bills)
@@ -194,6 +200,12 @@ namespace KodiaksApi.Data.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Fina_Income_UserId");
 
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Incomes)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Fina_Income_MemberId");
+
                 entity.HasOne(d => d.Method)
                     .WithMany(p => p.Incomes)
                     .HasForeignKey(d => d.MethodId)
@@ -208,10 +220,10 @@ namespace KodiaksApi.Data.Context
                 entity.HasIndex(e => new { e.MemberId, e.UserId }, "UK_Fina_Members_MemberIdUserId")
                     .IsUnique();
 
-                entity.HasIndex(e => e.CellPhoneNumber, "UQ__Members__0E37C1607DEACB20")
+                entity.HasIndex(e => e.CellPhoneNumber, "UQ__Members__0E37C160535A76EB")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Email, "UQ__Members__A9D105348F2FC6E6")
+                entity.HasIndex(e => e.Email, "UQ__Members__A9D1053466912896")
                     .IsUnique();
 
                 entity.Property(e => e.Birthday).HasColumnType("date");
@@ -253,10 +265,10 @@ namespace KodiaksApi.Data.Context
             {
                 entity.ToTable("MenuItems", "App");
 
-                entity.HasIndex(e => e.Title, "UQ__MenuItem__2CB664DCE3BB08AE")
+                entity.HasIndex(e => e.Title, "UQ__MenuItem__2CB664DC0EC6EC29")
                     .IsUnique();
 
-                entity.HasIndex(e => e.TargetPage, "UQ__MenuItem__3B967D4452EFAE67")
+                entity.HasIndex(e => e.TargetPage, "UQ__MenuItem__3B967D440F400C59")
                     .IsUnique();
 
                 entity.Property(e => e.IconSource)
@@ -322,7 +334,7 @@ namespace KodiaksApi.Data.Context
             {
                 entity.ToTable("Roles", "App");
 
-                entity.HasIndex(e => e.RoleDescription, "UQ__Roles__A2DDC1C914A086EC")
+                entity.HasIndex(e => e.RoleDescription, "UQ__Roles__A2DDC1C95D598732")
                     .IsUnique();
 
                 entity.Property(e => e.RoleDescription)
@@ -359,7 +371,7 @@ namespace KodiaksApi.Data.Context
             {
                 entity.ToTable("Users", "Sec");
 
-                entity.HasIndex(e => e.UserName, "UQ__Users__C9F28456C06BDADF")
+                entity.HasIndex(e => e.UserName, "UQ__Users__C9F28456BF02DE95")
                     .IsUnique();
 
                 entity.Property(e => e.CreatedDate)

@@ -5,6 +5,12 @@ namespace KodiaksApi.Data.DbModels
 {
     public partial class Member
     {
+        public Member()
+        {
+            Bills = new HashSet<Bill>();
+            Incomes = new HashSet<Income>();
+        }
+
         public long MemberId { get; set; }
         public long UserId { get; set; }
         public string FullName { get; set; }
@@ -18,5 +24,7 @@ namespace KodiaksApi.Data.DbModels
 
         public virtual BattingThrowingSide Btside { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Bill> Bills { get; set; }
+        public virtual ICollection<Income> Incomes { get; set; }
     }
 }

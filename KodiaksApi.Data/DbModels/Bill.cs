@@ -6,6 +6,7 @@ namespace KodiaksApi.Data.DbModels
     public partial class Bill
     {
         public long BillId { get; set; }
+        public long MemberId { get; set; }
         public short ConceptId { get; set; }
         public short MethodId { get; set; }
         public DateTime IncomeDate { get; set; }
@@ -17,6 +18,7 @@ namespace KodiaksApi.Data.DbModels
 
         public virtual Concept Concept { get; set; }
         public virtual User CreatedByNavigation { get; set; }
+        public virtual Member Member { get; set; }
         public virtual PaymentMethod Method { get; set; }
     }
 }
