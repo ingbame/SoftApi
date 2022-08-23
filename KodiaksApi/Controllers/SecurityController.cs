@@ -61,7 +61,8 @@ namespace KodiaksApi.Controllers
             else
                 return Unauthorized();
         }
-        [HttpPost("CreateNewPerson"), Authorize(Roles = "SuperAdmin")]
+        [HttpPost("CreateNewPerson")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult CreateNewPerson(CredentialsEntity credential)
         {
             if (credential == null)
