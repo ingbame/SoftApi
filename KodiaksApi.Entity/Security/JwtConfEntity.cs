@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KodiaksApi.Entity.Security
 {
-    public class JtwConfEntity
+    public class JwtConfEntity
     {
         public string Key { get; set; }
         public string Issuer { get; set; }
