@@ -61,22 +61,22 @@ namespace KodiaksApi.Controllers
             else
                 return Unauthorized();
         }
-        [HttpPost("CreateNewPerson")]
+        [HttpPost("CreateNewPerson"), Authorize(Roles = "SuperAdmin")]
         public ActionResult CreateNewPerson(CredentialsEntity credential)
         {
             if (credential == null)
                 return NoContent();
 
-            if (string.IsNullOrEmpty(credential.User.UserName.Trim()))
+            if (string.IsNullOrEmpty(credential.User.UserName?.Trim()))
                 return BadRequest("Nombre de usuario vacío.");
 
-            if (string.IsNullOrEmpty(credential.User.Password.Trim()))
+            if (string.IsNullOrEmpty(credential.User.Password?.Trim()))
                 return BadRequest("Contraseña vacía.");
 
-            if (string.IsNullOrEmpty(credential.Member.FullName.Trim()))
+            if (string.IsNullOrEmpty(credential.Member.FullName?.Trim()))
                 return BadRequest("Nombre de persona vacío.");
 
-            if (string.IsNullOrEmpty(credential.Member.NickName.Trim()))
+            if (string.IsNullOrEmpty(credential.Member.NickName?.Trim()))
                 credential.Member.NickName = credential.User.UserName;
 
             if (credential.Member.Birthday == null)
@@ -85,7 +85,7 @@ namespace KodiaksApi.Controllers
             if (credential.Member.Birthday < DateTime.Parse("1940-01-01"))
                 return BadRequest("Excede los 80 años, revise su fecha de nacimiento.");
 
-            if (string.IsNullOrEmpty(credential.Member.CellPhoneNumber.Trim()))
+            if (string.IsNullOrEmpty(credential.Member.CellPhoneNumber?.Trim()))
                 return BadRequest("Número de celular vacío.");
 
             var personaResult = BoSecurity.Instance.CreateNewPerson(credential);

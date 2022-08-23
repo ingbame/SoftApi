@@ -57,7 +57,7 @@ namespace KodiaksApi.Data
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 var personaToAdd = newUser.Member.CopyProperties(new Member());
-                var getDefaultRole = ctx.Roles.Where(w => w.RoleDescription.Equals("Usuario")).FirstOrDefault();
+                var getDefaultRole = ctx.Roles.Where(w => w.RoleDescription.Equals("User")).FirstOrDefault();
                 var userToAdd = new User
                 {
                     UserName = newUser.User.UserName,
