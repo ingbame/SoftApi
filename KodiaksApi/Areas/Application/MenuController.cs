@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KodiaksApi.Controllers
+namespace KodiaksApi.Areas.Application
 {
-    [Route("api/[controller]")]
+    [Area("Application")]
+    [Route("api/[area]/[controller]")]
     [ApiController]
-    public class AppController : ControllerBase
+    public class MenuController : ControllerBase
     {
         [HttpGet("GetMenu"), Authorize]
         public ActionResult GetMenu()

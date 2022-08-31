@@ -18,7 +18,7 @@ namespace KodiaksApi.Data.DbModels
         public int ShirtNumber { get; set; }
         public short BtsideId { get; set; }
         public string PhotoUrl { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string Email { get; set; }
         public string CellPhoneNumber { get; set; }
 

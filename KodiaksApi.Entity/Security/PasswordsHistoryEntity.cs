@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace KodiaksApi.Entity.Security
 {
-    public class RoleEntity
+    internal class PasswordsHistoryEntity
     {
-        public int? RoleId { get; set; }
-        public string RoleDescription { get; set; }
     }
 }

@@ -16,5 +16,16 @@ namespace KodiaksApi.Data.Context
             builder.UseSqlServer(connectionString);
             return new KodiaksDbContext(builder.Options);
         }
+        public KodiaksDdExtentions ExtentionsDbContext()
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+            var builder = new DbContextOptionsBuilder<KodiaksDbContext>();
+            var connectionString = configuration.GetConnectionString("KodiaksDbConn");
+            builder.UseSqlServer(connectionString);
+            return new KodiaksDdExtentions(builder.Options);
+        }
     }
 }
