@@ -21,7 +21,7 @@ namespace KodiaksApi.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IncomeSelEntity>().ToSqlQuery("EXEC [Fina].[SPSelIncomes]").HasNoKey();
+            modelBuilder.Entity<IncomeSelEntity>(ent => { ent.HasNoKey(); });
         }
     }
 }

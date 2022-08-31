@@ -31,11 +31,20 @@ namespace KodiaksApi.Core
         }
         #endregion
         #region Metodos publicos
-        public ResponseEntity<string> ValidateIncomeModel(IncomeEntity request)
+        public ResponseEntity<string> ValidateIncomeModel(IncomeEntity request, bool validateAll = false)
         {
             var response = new ResponseEntity<string>();
             try
             {
+                if (validateAll)
+                {
+                    if (!request.IncomeId.HasValue || request.IncomeId <= 0)
+                        throw new Exception("Debe de tener un Id la entrada que desea manipular.");
+                    if (!request.CreatedDate.HasValue)
+                        throw new Exception("Fecha de creación debe de estar con valor.");
+                    if (request.CreatedBy <= 0)
+                        throw new Exception("El usuario para crear no se está mandando.");
+                }
                 if (!request.MemberId.HasValue || request.MemberId <= 0)
                     throw new Exception("La persona que está capturando el movimiento no es válida, asegurese de tener permisos.");
 
@@ -66,12 +75,12 @@ namespace KodiaksApi.Core
                 return response;
             }
         }
-        public ResponseEntity<List<IncomeSelEntity>> GetIncomes()
+        public async Task<ResponseEntity<List<IncomeSelEntity>>> GetIncomes(long? id = null)
         {
             var response = new ResponseEntity<List<IncomeSelEntity>>();
             try
             {
-                response.Model = DaFinance.Instance.GetIncomes();
+                response.Model = await DaFinance.Instance.GetIncomes(id);
                 return response;
             }
             catch (Exception ex)
@@ -83,12 +92,47 @@ namespace KodiaksApi.Core
                 return response;
             }
         }
-        public ResponseEntity<IncomeEntity> NewIncome(IncomeEntity request)
+        public async Task<ResponseEntity<IncomeEntity>> NewIncome(IncomeEntity request)
         {
             var response = new ResponseEntity<IncomeEntity>();
             try
             {
-                response.Model = DaFinance.Instance.NewIncome(request);
+                response.Model = await DaFinance.Instance.NewIncome(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = true;
+                response.Message = ex.Message;
+                if (ex.InnerException != null)
+                    response.Message += $"\n{ex.InnerException.Message}";
+                return response;
+            }
+        }
+        public async Task<ResponseEntity<IncomeEntity>> EditIncome(IncomeEntity request)
+        {
+            var response = new ResponseEntity<IncomeEntity>();
+            try
+            {
+                response.Model = await DaFinance.Instance.EditIncome(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = true;
+                response.Message = ex.Message;
+                if (ex.InnerException != null)
+                    response.Message += $"\n{ex.InnerException.Message}";
+                return response;
+            }
+        }
+
+        public async Task<ResponseEntity<IncomeEntity>> DeleteIncome(long? incomeId)
+        {
+            var response = new ResponseEntity<IncomeEntity>();
+            try
+            {
+                response.Model = await DaFinance.Instance.DeleteIncome(incomeId);
                 return response;
             }
             catch (Exception ex)
