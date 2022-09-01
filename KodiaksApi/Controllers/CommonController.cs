@@ -7,5 +7,6 @@ namespace KodiaksApi.Controllers
     [ApiController]
     public class CommonController : ControllerBase
     {
+        //Comentario random
     }
 }
