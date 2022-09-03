@@ -65,13 +65,7 @@ namespace KodiaksApi.Areas.Finance
         {
             try
             {
-                if (request == null)
-                    throw new Exception("No se ha ingresado información");
-
-                if (!request.MovementId.HasValue || request.MovementId <= 0)
-                    throw new Exception("Debe de tener un Id la entrada que desea manipular.");
-
-                var incomeResult = await BoMovement.Instance.DeleteMovement(request.MovementId);
+                var incomeResult = await BoMovement.Instance.DeleteMovement(request);
                 return Ok(incomeResult);
 
             }

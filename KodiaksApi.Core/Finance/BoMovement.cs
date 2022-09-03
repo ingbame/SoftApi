@@ -74,9 +74,13 @@ namespace KodiaksApi.Core.Finance
             var response = await DaMovement.Instance.EditMovement(request);
             return response;
         }
-        public async Task<MovementEntity> DeleteMovement(long? incomeId)
+        public async Task<MovementEntity> DeleteMovement(MovementEntity request)
         {
-            var response = await DaMovement.Instance.DeleteMovement(incomeId);
+            if (request == null)
+                throw new Exception("No se ha ingresado información");
+            if (!request.MovementId.HasValue || request.MovementId <= 0)
+                throw new Exception("Debe de tener un Id la entrada que desea manipular.");
+            var response = await DaMovement.Instance.DeleteMovement(request.MovementId);
             return response;
         }
     }

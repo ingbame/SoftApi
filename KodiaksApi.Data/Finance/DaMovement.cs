@@ -87,13 +87,13 @@ namespace KodiaksApi.Data.Finance
                 }
             }
         }
-        public async Task<MovementEntity> DeleteMovement(long? incomeId)
+        public async Task<MovementEntity> DeleteMovement(long? MovementId)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 using (var trans = ctx.Database.BeginTransaction())
                 {
-                    var findData = await ctx.Movements.FindAsync(incomeId.Value);
+                    var findData = await ctx.Movements.FindAsync(MovementId);
                     if (findData != null)
                     {
                         ctx.Movements.Remove(findData);
