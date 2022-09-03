@@ -16,7 +16,7 @@ namespace KodiaksApi.Areas.Finance
         {
             try
             {
-                var searchResult = await BoMovement.Instance.GetMovement(id.Value);
+                var searchResult = await BoMovement.Instance.GetMovement(id);
                 return Ok(searchResult);
             }
             catch (Exception ex)
@@ -32,9 +32,6 @@ namespace KodiaksApi.Areas.Finance
         {
             try
             {
-                if (request == null)
-                    throw new Exception("No se ha ingresado información");
-                BoMovement.Instance.isValidMovementModel(request);
                 var incomeResult = await BoMovement.Instance.NewMovement(request);
                 return Ok(incomeResult);
             }
@@ -47,16 +44,11 @@ namespace KodiaksApi.Areas.Finance
             }            
         }
         [HttpPut("Update")]
-        public async Task<ActionResult> Put(MovementEntity request)
+        public async Task<ActionResult> Put(long? id, MovementEntity request)
         {
             try
-            {
-                if (request == null)
-                    throw new Exception("No se ha ingresado información");
-                if (!request.MovementId.HasValue || request.MovementId <= 0)
-                    throw new Exception("Debe de tener un Id la entrada que desea manipular.");
-                BoMovement.Instance.isValidMovementModel(request);
-                var incomeResult = await BoMovement.Instance.EditMovement(request);
+            {                
+                var incomeResult = await BoMovement.Instance.EditMovement(id, request);
                 return Ok(incomeResult);
             }
             catch (Exception ex)

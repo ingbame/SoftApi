@@ -29,6 +29,9 @@ namespace KodiaksApi.Core.Finance
             if (!request.MemberId.HasValue || request.MemberId <= 0)
                 throw new Exception("La persona que está capturando el movimiento no es válida, asegurese de tener permisos.");
 
+            if (!request.MovementTypeId.HasValue || request.MovementTypeId <= 0)
+                throw new Exception("No ha seleccionado un tipo de movimiento válido.");
+
             if (!request.ConceptId.HasValue || request.ConceptId <= 0)
                 throw new Exception("No ha seleccionado un cocepto válido.");
 
@@ -53,11 +56,21 @@ namespace KodiaksApi.Core.Finance
         }
         public async Task<MovementEntity> NewMovement(MovementEntity request)
         {
+            if (request == null)
+                throw new Exception("No se ha ingresado información");
+            isValidMovementModel(request);
             var response = await DaMovement.Instance.NewMovement(request);
             return response;
         }
-        public async Task<MovementEntity> EditMovement(MovementEntity request)
+        public async Task<MovementEntity> EditMovement(long? id, MovementEntity request)
         {
+            if (!id.HasValue)
+                throw new Exception("Debe de inluir id con la petición.");
+            if (request == null)
+                throw new Exception("No se ha ingresado información");
+            if (id != request.MovementId)
+                throw new Exception("Debe de coincidir el id del movimiento con la petición.");
+            isValidMovementModel(request);
             var response = await DaMovement.Instance.EditMovement(request);
             return response;
         }
