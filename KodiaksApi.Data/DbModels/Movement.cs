@@ -10,7 +10,7 @@ namespace KodiaksApi.Data.DbModels
         public short MovementTypeId { get; set; }
         public short ConceptId { get; set; }
         public short MethodId { get; set; }
-        public DateTime IncomeDate { get; set; }
+        public DateTime MovementDate { get; set; }
         public decimal Amount { get; set; }
         public string AdditionalComment { get; set; }
         public string EvidenceUrl { get; set; }

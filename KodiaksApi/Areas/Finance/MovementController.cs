@@ -68,6 +68,7 @@ namespace KodiaksApi.Areas.Finance
             }
         }
         [HttpDelete("Delete")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> Delete(MovementEntity request)
         {
             try

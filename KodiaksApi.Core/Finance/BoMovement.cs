@@ -35,9 +35,9 @@ namespace KodiaksApi.Core.Finance
             if (!request.MethodId.HasValue || request.MethodId <= 0)
                 throw new Exception("No ha seleccionado un método de pago válido.");
 
-            if (!request.IncomeDate.HasValue)
+            if (!request.MovementDate.HasValue)
                 throw new Exception("La fecha es incorrecta.");
-            if (request.IncomeDate.Value.Date > DateTime.Now.Date)
+            if (request.MovementDate.Value.Date > DateTime.Now.Date)
                 throw new Exception("La fecha es mayor al día de hoy.");
 
             if (!request.Amount.HasValue || request.Amount <= 0)

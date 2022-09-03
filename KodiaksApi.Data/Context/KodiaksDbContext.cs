@@ -189,7 +189,7 @@ namespace KodiaksApi.Data.Context
 
                 entity.Property(e => e.EvidenceUrl).IsUnicode(false);
 
-                entity.Property(e => e.IncomeDate).HasColumnType("datetime");
+                entity.Property(e => e.MovementDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Concept)
                     .WithMany(p => p.Movements)
