@@ -21,7 +21,7 @@ namespace KodiaksApi.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IncomeSelEntity>(ent => { ent.HasNoKey(); });
+            modelBuilder.Entity<MovementSelEntity>(ent => { ent.HasNoKey(); });
         }
     }
 }

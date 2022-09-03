@@ -7,8 +7,7 @@ namespace KodiaksApi.Data.DbModels
     {
         public Member()
         {
-            Bills = new HashSet<Bill>();
-            Incomes = new HashSet<Income>();
+            Movements = new HashSet<Movement>();
         }
 
         public long MemberId { get; set; }
@@ -24,7 +23,6 @@ namespace KodiaksApi.Data.DbModels
 
         public virtual BattingThrowingSide Btside { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Bill> Bills { get; set; }
-        public virtual ICollection<Income> Incomes { get; set; }
+        public virtual ICollection<Movement> Movements { get; set; }
     }
 }

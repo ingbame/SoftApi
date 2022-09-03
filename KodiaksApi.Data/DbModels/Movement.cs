@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace KodiaksApi.Data.DbModels
 {
-    public partial class Income
+    public partial class Movement
     {
-        public long IncomeId { get; set; }
+        public long MovementId { get; set; }
         public long MemberId { get; set; }
+        public short MovementTypeId { get; set; }
         public short ConceptId { get; set; }
         public short MethodId { get; set; }
         public DateTime IncomeDate { get; set; }
@@ -20,5 +21,6 @@ namespace KodiaksApi.Data.DbModels
         public virtual User CreatedByNavigation { get; set; }
         public virtual Member Member { get; set; }
         public virtual PaymentMethod Method { get; set; }
+        public virtual MovementType MovementType { get; set; }
     }
 }

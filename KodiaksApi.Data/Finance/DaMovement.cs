@@ -1,24 +1,18 @@
 ﻿using KodiaksApi.Data.Context;
 using KodiaksApi.Data.DbModels;
 using KodiaksApi.Entity.Finance;
-using KodiaksApi.Entity.Security;
 using KodiaksApi.Util;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KodiaksApi.Data
+namespace KodiaksApi.Data.Finance
 {
-    public class DaFinance
+    public class DaMovement
     {
         #region Patron de Diseño Sigleton
-        private static DaFinance _instance;
+        private static DaMovement _instance;
         private static readonly object _instanceLock = new object();
-        public static DaFinance Instance
+        public static DaMovement Instance
         {
             get
             {
@@ -27,88 +21,74 @@ namespace KodiaksApi.Data
                     lock (_instanceLock)
                     {
                         if (_instance == null)
-                            _instance = new DaFinance();
+                            _instance = new DaMovement();
                     }
                 }
                 return _instance;
             }
         }
         #endregion
-        #region Metodos publicos  
-        public async Task<List<IncomeSelEntity>> GetIncomes(int? id = null)
+        public async Task<List<MovementSelEntity>> GetMovement(long? id = null)
         {
-            List<IncomeSelEntity> incomesLst = new List<IncomeSelEntity>();
+            List<MovementSelEntity> incomesLst = new List<MovementSelEntity>();
             await Task.Run(() =>
             {
                 using (var ctx = new DbContextConfig().ExtentionsDbContext())
                 {
-                    var sqlCmnd = "EXEC [Fina].[SPSelIncomes]";
+                    var sqlCmnd = "EXEC [Fina].[SPSelMovements]";
                     SqlParameter param = null;
                     if (id.HasValue)
                     {
-                        param = new SqlParameter("@IncomeId", id.Value);
+                        param = new SqlParameter("@MovementId", id.Value);
                         sqlCmnd += param.ParameterName;
                     }
 
-                    incomesLst = ctx.Set<IncomeSelEntity>().FromSqlRaw(sqlCmnd, param).ToList();
+                    incomesLst = ctx.Set<MovementSelEntity>().FromSqlRaw(sqlCmnd, param).ToList();
                 }
             });
             return incomesLst;
         }
-        public async Task<IncomeEntity> NewIncome(IncomeEntity request)
+        public async Task<MovementEntity> NewMovement(MovementEntity request)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 using (var trans = ctx.Database.BeginTransaction())
                 {
-                    var income = request.CopyProperties(new Income());
-                    var addIncome = await ctx.Incomes.AddAsync(income);
+                    var income = request.CopyProperties(new Movement());
+                    var addIncome = await ctx.Movements.AddAsync(income);
                     if (addIncome.State != EntityState.Added)
                         throw new Exception("No se pudo agregar correctamente el ingreso.");
                     await ctx.SaveChangesAsync();
                     await trans.CommitAsync();
-                    var response = income.CopyProperties(new IncomeEntity());
+                    var response = income.CopyProperties(new MovementEntity());
                     return response;
                 }
             }
         }
-        public async Task<IncomeEntity> EditIncome(IncomeEntity request)
+        public async Task<MovementEntity> EditMovement(MovementEntity request)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 using (var trans = ctx.Database.BeginTransaction())
                 {
-                    var income = request.CopyProperties(new Income());
-                    //var findData = await ctx.Incomes.FindAsync(request.IncomeId);
-                    //if (findData != null)
-                    //{
-                    //    findData.MemberId = request.MemberId.Value;
-                    //    findData.ConceptId = request.ConceptId.Value;
-                    //    findData.MethodId = request.MethodId.Value;
-                    //    findData.IncomeDate = request.IncomeDate.Value;
-                    //    findData.Amount = request.Amount.Value;
-                    //    findData.AdditionalComment = request.AdditionalComment;
-                    //    findData.EvidenceUrl = request.EvidenceUrl;
-                    //    await ctx.SaveChangesAsync();
-                    //    await trans.CommitAsync();
-                    //}
+                    var income = request.CopyProperties(new Movement());
 
-                    ctx.Incomes.Update(income);
+                    ctx.Movements.Update(income);
                     await ctx.SaveChangesAsync();
                     await trans.CommitAsync();
 
-                    var response = income.CopyProperties(new IncomeEntity());
+                    var response = income.CopyProperties(new MovementEntity());
                     return response;
                 }
             }
         }
-        public async Task<IncomeEntity> DeleteIncome(long? incomeId)
+        public async Task<MovementEntity> DeleteMovement(long? incomeId)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 using (var trans = ctx.Database.BeginTransaction())
                 {
-                    var findData = await ctx.Incomes.FindAsync(incomeId.Value);
+                    var findData = await ctx.Movements.FindAsync(incomeId.Value);
                     if (findData != null)
                     {
                         ctx.Remove(findData);
@@ -118,13 +98,11 @@ namespace KodiaksApi.Data
                     else
                         throw new Exception("No se encuentra el valor a eliminar.");
 
-                    var response = findData.CopyProperties(new IncomeEntity());
+                    var response = findData.CopyProperties(new MovementEntity());
                     return response;
                 }
             }
         }
-        #endregion
-        #region Metodos privados
-        #endregion
+
     }
 }

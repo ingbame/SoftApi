@@ -7,17 +7,13 @@ namespace KodiaksApi.Data.DbModels
     {
         public Concept()
         {
-            Bills = new HashSet<Bill>();
-            Incomes = new HashSet<Income>();
+            Movements = new HashSet<Movement>();
         }
 
         public short ConceptId { get; set; }
-        public short ConceptTypeId { get; set; }
         public string ConceptKey { get; set; }
         public string ConceptDesc { get; set; }
 
-        public virtual ConceptType ConceptType { get; set; }
-        public virtual ICollection<Bill> Bills { get; set; }
-        public virtual ICollection<Income> Incomes { get; set; }
+        public virtual ICollection<Movement> Movements { get; set; }
     }
 }

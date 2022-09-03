@@ -19,12 +19,11 @@ namespace KodiaksApi.Data.Context
 
         public virtual DbSet<AssignRoleMenu> AssignRoleMenus { get; set; }
         public virtual DbSet<BattingThrowingSide> BattingThrowingSides { get; set; }
-        public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Concept> Concepts { get; set; }
-        public virtual DbSet<ConceptType> ConceptTypes { get; set; }
-        public virtual DbSet<Income> Incomes { get; set; }
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MenuItem> MenuItems { get; set; }
+        public virtual DbSet<Movement> Movements { get; set; }
+        public virtual DbSet<MovementType> MovementTypes { get; set; }
         public virtual DbSet<PasswordsHistory> PasswordsHistories { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
@@ -82,57 +81,14 @@ namespace KodiaksApi.Data.Context
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Bill>(entity =>
-            {
-                entity.ToTable("Bills", "Fina");
-
-                entity.Property(e => e.AdditionalComment)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Amount).HasColumnType("decimal(16, 2)");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EvidenceUrl).IsUnicode(false);
-
-                entity.Property(e => e.IncomeDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Concept)
-                    .WithMany(p => p.Bills)
-                    .HasForeignKey(d => d.ConceptId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Bills_ConceptId");
-
-                entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.Bills)
-                    .HasForeignKey(d => d.CreatedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Bills_UserId");
-
-                entity.HasOne(d => d.Member)
-                    .WithMany(p => p.Bills)
-                    .HasForeignKey(d => d.MemberId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Bills_MemberId");
-
-                entity.HasOne(d => d.Method)
-                    .WithMany(p => p.Bills)
-                    .HasForeignKey(d => d.MethodId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Bills_MethodId");
-            });
-
             modelBuilder.Entity<Concept>(entity =>
             {
                 entity.ToTable("Concepts", "Fina");
 
-                entity.HasIndex(e => new { e.ConceptTypeId, e.ConceptDesc }, "UQ_Fina_Concepts_Type_Desc")
+                entity.HasIndex(e => e.ConceptDesc, "UQ_Fina_Concepts_Type_Desc")
                     .IsUnique();
 
-                entity.HasIndex(e => new { e.ConceptTypeId, e.ConceptKey }, "UQ_Fina_Concepts_Type_Key")
+                entity.HasIndex(e => e.ConceptKey, "UQ_Fina_Concepts_Type_Key")
                     .IsUnique();
 
                 entity.Property(e => e.ConceptDesc)
@@ -144,76 +100,6 @@ namespace KodiaksApi.Data.Context
                     .IsRequired()
                     .HasMaxLength(3)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.ConceptType)
-                    .WithMany(p => p.Concepts)
-                    .HasForeignKey(d => d.ConceptTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Concepts_ConceptTypeId");
-            });
-
-            modelBuilder.Entity<ConceptType>(entity =>
-            {
-                entity.ToTable("ConceptTypes", "Fina");
-
-                entity.HasIndex(e => e.ConceptTypeDesc, "UQ_Fina_ConceptTypes_Desc")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.ConceptTypeKey, "UQ_Fina_ConceptTypes_Key")
-                    .IsUnique();
-
-                entity.Property(e => e.ConceptTypeDesc)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ConceptTypeKey)
-                    .IsRequired()
-                    .HasMaxLength(3)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Income>(entity =>
-            {
-                entity.ToTable("Incomes", "Fina");
-
-                entity.Property(e => e.AdditionalComment)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Amount).HasColumnType("decimal(16, 2)");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EvidenceUrl).IsUnicode(false);
-
-                entity.Property(e => e.IncomeDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Concept)
-                    .WithMany(p => p.Incomes)
-                    .HasForeignKey(d => d.ConceptId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Income_ConceptId");
-
-                entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.Incomes)
-                    .HasForeignKey(d => d.CreatedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Income_UserId");
-
-                entity.HasOne(d => d.Member)
-                    .WithMany(p => p.Incomes)
-                    .HasForeignKey(d => d.MemberId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Income_MemberId");
-
-                entity.HasOne(d => d.Method)
-                    .WithMany(p => p.Incomes)
-                    .HasForeignKey(d => d.MethodId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Fina_Income_MethodId");
             });
 
             modelBuilder.Entity<Member>(entity =>
@@ -284,6 +170,76 @@ namespace KodiaksApi.Data.Context
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Movement>(entity =>
+            {
+                entity.ToTable("Movements", "Fina");
+
+                entity.Property(e => e.AdditionalComment)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(16, 2)");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.EvidenceUrl).IsUnicode(false);
+
+                entity.Property(e => e.IncomeDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Concept)
+                    .WithMany(p => p.Movements)
+                    .HasForeignKey(d => d.ConceptId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Fina_Movements_ConceptId");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.Movements)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Fina_Movements_UserId");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Movements)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Fina_Movements_MemberId");
+
+                entity.HasOne(d => d.Method)
+                    .WithMany(p => p.Movements)
+                    .HasForeignKey(d => d.MethodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Fina_Movements_MethodId");
+
+                entity.HasOne(d => d.MovementType)
+                    .WithMany(p => p.Movements)
+                    .HasForeignKey(d => d.MovementTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Fina_Movements_MovementTypeId");
+            });
+
+            modelBuilder.Entity<MovementType>(entity =>
+            {
+                entity.ToTable("MovementTypes", "Fina");
+
+                entity.HasIndex(e => e.MovementTypeKey, "UQ_MovementTypes_ConceptTypes_Desc")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.MovementTypeDesc, "UQ_MovementTypes_ConceptTypes_Key")
+                    .IsUnique();
+
+                entity.Property(e => e.MovementTypeDesc)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MovementTypeKey)
+                    .IsRequired()
+                    .HasMaxLength(3)
                     .IsUnicode(false);
             });
 

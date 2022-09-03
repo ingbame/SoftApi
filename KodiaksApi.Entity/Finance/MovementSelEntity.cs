@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KodiaksApi.Entity.Finance
 {
-    public class IncomeSelEntity
+    public class MovementSelEntity
     {
         public long? IncomeId { get; set; }
         public long? MemberId { get; set; }

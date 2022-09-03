@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace KodiaksApi.Entity.Finance
 {
-    public class IncomeEntity
+    public class MovementEntity
     {
-        public long? IncomeId { get; set; }
+        public long? MovementId { get; set; }
         public long? MemberId { get; set; }
+        public short? MovementTypeId { get; set; }
         public short? ConceptId { get; set; }
         public short? MethodId { get; set; }
         public DateTime? IncomeDate { get; set; }
         public decimal? Amount { get; set; }
         public string AdditionalComment { get; set; }
         public string EvidenceUrl { get; set; }
-        //Parametros de auditoría
         public DateTime? CreatedDate { get; set; }
         public long CreatedBy { get; set; }
     }

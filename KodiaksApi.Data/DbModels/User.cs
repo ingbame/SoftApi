@@ -7,9 +7,8 @@ namespace KodiaksApi.Data.DbModels
     {
         public User()
         {
-            Bills = new HashSet<Bill>();
-            Incomes = new HashSet<Income>();
             Members = new HashSet<Member>();
+            Movements = new HashSet<Movement>();
             PasswordsHistories = new HashSet<PasswordsHistory>();
             Rosters = new HashSet<Roster>();
         }
@@ -26,9 +25,8 @@ namespace KodiaksApi.Data.DbModels
         public DateTime CreatedDate { get; set; }
 
         public virtual Role Role { get; set; }
-        public virtual ICollection<Bill> Bills { get; set; }
-        public virtual ICollection<Income> Incomes { get; set; }
         public virtual ICollection<Member> Members { get; set; }
+        public virtual ICollection<Movement> Movements { get; set; }
         public virtual ICollection<PasswordsHistory> PasswordsHistories { get; set; }
         public virtual ICollection<Roster> Rosters { get; set; }
     }

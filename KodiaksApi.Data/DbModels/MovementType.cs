@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace KodiaksApi.Data.DbModels
 {
-    public partial class PaymentMethod
+    public partial class MovementType
     {
-        public PaymentMethod()
+        public MovementType()
         {
             Movements = new HashSet<Movement>();
         }
 
-        public short MethodId { get; set; }
-        public string MethodDesc { get; set; }
+        public short MovementTypeId { get; set; }
+        public string MovementTypeKey { get; set; }
+        public string MovementTypeDesc { get; set; }
 
         public virtual ICollection<Movement> Movements { get; set; }
     }
