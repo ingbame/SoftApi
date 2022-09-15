@@ -53,7 +53,7 @@ namespace KodiaksApi.Areas.Security
                     if (response.Error)
                         return BadRequest(response.Message);
 
-                    return Ok(response.Model);
+                    return Ok(new { token = response.Model });
                 }
                 else
                     return Unauthorized();
