@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+//Variable para permitir conexiones externas
+var myCors = "KodiaksCors";
 
 // Add services to the container.
 
@@ -30,7 +32,17 @@ builder.Services.AddSwaggerGen(c => {
         }
     });
 });
-
+//Agregando los cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myCors, builder =>
+    {
+        //builder.WithOrigins("http://localhost");
+        //builder.AllowAnyOrigin();
+        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+        .AllowAnyHeader().AllowAnyMethod();
+    });
+});
 //Autenticación por token Jwt
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
@@ -58,6 +70,9 @@ var app = builder.Build();
         c.RoutePrefix = string.Empty;
     });
 }
+
+//Configurar Cors
+app.UseCors(myCors);
 
 app.UseHttpsRedirection();
 
