@@ -40,7 +40,7 @@ builder.Services.AddCors(options =>
         //builder.WithOrigins("http://localhost");
         //builder.AllowAnyOrigin();
         builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-        .AllowAnyHeader().AllowAnyMethod();
+        .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 //Autenticación por token Jwt
