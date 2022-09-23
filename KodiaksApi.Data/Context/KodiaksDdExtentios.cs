@@ -1,4 +1,5 @@
-﻿using KodiaksApi.Entity.Finance;
+﻿using KodiaksApi.Entity.Application;
+using KodiaksApi.Entity.Finance;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace KodiaksApi.Data.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<MovementSelEntity>(ent => { ent.HasNoKey(); });
+            modelBuilder.Entity<MemberSelEntity>(ent => { ent.HasNoKey(); });
         }
     }
 }

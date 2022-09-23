@@ -1,4 +1,6 @@
 ﻿using KodiaksApi.Core;
+using KodiaksApi.Core.Application;
+using KodiaksApi.Core.Finance;
 using KodiaksApi.Entity.Application;
 using KodiaksApi.Entity.Security;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +14,23 @@ namespace KodiaksApi.Areas.Application
     [ApiController]
     public class MemberController : ControllerBase
     {
-        [HttpPost("CreateNewMember")]
+        [HttpGet("Get")]
+        public async Task<ActionResult> Get(long? id = null)
+        {
+            try
+            {
+                var searchResult = await BoMember.Instance.GetMember(id);
+                return Ok(searchResult);
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                if (ex.InnerException != null)
+                    message = ex.InnerException.Message;
+                return BadRequest(message);
+            }
+        }
+        [HttpPost("Post")]
         [Authorize(Roles = "SuperAdmin")]
         public ActionResult CreateNewMember(CredentialsEntity credential)
         {
@@ -45,7 +63,7 @@ namespace KodiaksApi.Areas.Application
                 return BadRequest(personaResult.Message);
             return Ok(personaResult.Model);
         }
-        [HttpPost("EditMember")]
+        [HttpPost("Put")]
         [Authorize]
         public ActionResult EditMember(MemberEntity credential)
         {

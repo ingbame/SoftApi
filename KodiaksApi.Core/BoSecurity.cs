@@ -132,7 +132,7 @@ namespace KodiaksApi.Core
                 new Claim(ClaimTypes.GivenName, credential.Member.NickName),
                 new Claim(ClaimTypes.Role,credential.User.Role.RoleDescription)
             };
-            var expires = DateTime.Now.AddMinutes(1);
+            var expires = DateTime.Now.AddMinutes(5);
             var token = new JwtSecurityToken(
                 jwtConf.Issuer,
                 jwtConf.Audience,

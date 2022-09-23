@@ -152,24 +152,16 @@ namespace KodiaksApi.Data.Context
             {
                 entity.ToTable("MenuItems", "App");
 
-                entity.HasIndex(e => e.TargetPage, "UQ_App_MenuItems_TargetPage")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Title, "UQ_App_MenuItems_Title")
+                entity.HasIndex(e => e.ItemKey, "UQ_App_MenuItems_ItemKey")
                     .IsUnique();
 
                 entity.Property(e => e.IconSource)
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.TargetPage)
+                entity.Property(e => e.ItemKey)
                     .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(15)
                     .IsUnicode(false);
             });
 
