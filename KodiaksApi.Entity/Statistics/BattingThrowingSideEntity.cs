@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace KodiaksApi.Entity.Statistics
 {
-    internal class BattingThrowingSideEntity
+    public class BattingThrowingSideEntity
     {
+        public short? BtsideId { get; set; }
+        public string KeyValue { get; set; }
+        public string BtsideDesc { get; set; }
     }
 }

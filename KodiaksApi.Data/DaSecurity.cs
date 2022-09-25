@@ -51,48 +51,7 @@ namespace KodiaksApi.Data
                 }
                 return response;
             }
-        }
-        public CredentialsDtoEntity CreateNewPerson(CredentialsEntity newUser, string salt, string password)
-        {
-            using (var ctx = new DbContextConfig().CreateDbContext())
-            {
-                var personaToAdd = newUser.Member.CopyProperties(new Member());
-                var getDefaultRole = ctx.Roles.Where(w => w.RoleDescription.Equals("User")).FirstOrDefault();
-                var userToAdd = new User
-                {
-                    UserName = newUser.User.UserName,
-                    Password = password,
-                    PasswordSalt = salt,
-                    RoleId = getDefaultRole.RoleId
-                };
-
-                var trans = ctx.Database.BeginTransaction();
-                var userResult = ctx.Users.Where(w => w.UserName == userToAdd.UserName).FirstOrDefault();
-                if (userResult != null)
-                    throw new Exception("Nombre de usuario registrado ya existe.");
-                var addUser = ctx.Users.Add(userToAdd);
-                if (addUser.State != EntityState.Added)
-                    throw new Exception("No se agregó el usuario correctamente");
-                ctx.SaveChanges();
-
-                //Validar que la persona exista, pendiente
-                personaToAdd.UserId = userToAdd.UserId;
-                var addPersona = ctx.Members.Add(personaToAdd);
-                if (addPersona.State != EntityState.Added)
-                    throw new Exception("No se agregó el afiliado correctamente");
-                ctx.SaveChanges();
-
-                trans.Commit();
-
-                var response = new CredentialsDtoEntity
-                {
-                    Member = personaToAdd.CopyProperties(new MemberEntity()),
-                    User = userToAdd.CopyProperties(new LoginDtoEntity())
-                };
-
-                return response;
-            }
-        }
+        }        
         #endregion
         #region Metodos privados
         #endregion

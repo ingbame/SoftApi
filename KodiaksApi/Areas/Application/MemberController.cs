@@ -12,9 +12,10 @@ namespace KodiaksApi.Areas.Application
     [Area("Application")]
     [Route("api/[area]/[controller]")]
     [ApiController]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class MemberController : ControllerBase
     {
-        [HttpGet("Get")]
+        [HttpGet()]
         public async Task<ActionResult> Get(long? id = null)
         {
             try
@@ -30,72 +31,37 @@ namespace KodiaksApi.Areas.Application
                 return BadRequest(message);
             }
         }
-        [HttpPost("Post")]
-        [Authorize(Roles = "SuperAdmin")]
-        public ActionResult CreateNewMember(CredentialsEntity credential)
+        [HttpPost()]
+        public async Task<ActionResult> Post(CredentialsEntity request)
         {
-            if (credential == null)
-                return NoContent();
-
-            if (string.IsNullOrEmpty(credential.User.UserName?.Trim()))
-                return BadRequest("Nombre de usuario vacío.");
-
-            if (string.IsNullOrEmpty(credential.User.Password?.Trim()))
-                return BadRequest("Contraseña vacía.");
-
-            if (string.IsNullOrEmpty(credential.Member.FullName?.Trim()))
-                return BadRequest("Nombre de persona vacío.");
-
-            if (string.IsNullOrEmpty(credential.Member.NickName?.Trim()))
-                credential.Member.NickName = credential.User.UserName;
-
-            if (credential.Member.Birthday == null)
-                return BadRequest("Revise su fecha de nacimiento.");
-
-            if (credential.Member.Birthday < DateTime.Parse("1940-01-01"))
-                return BadRequest("Excede los 80 años, revise su fecha de nacimiento.");
-
-            if (string.IsNullOrEmpty(credential.Member.CellPhoneNumber?.Trim()))
-                return BadRequest("Número de celular vacío.");
-
-            var personaResult = BoSecurity.Instance.CreateNewPerson(credential);
-            if (personaResult.Error)
-                return BadRequest(personaResult.Message);
-            return Ok(personaResult.Model);
+            try
+            {
+                var personaResult = await BoMember.Instance.CreateMember(request);
+                return Ok(personaResult);
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                if (ex.InnerException != null)
+                    message = ex.InnerException.Message;
+                return BadRequest(message);
+            }
         }
-        [HttpPost("Put")]
-        [Authorize]
-        public ActionResult EditMember(MemberEntity credential)
+        [HttpPut()]
+        public async Task<ActionResult> Put(long? id, CredentialsEntity request)
         {
-            //if (credential == null)
-            //    return NoContent();
-
-            //if (string.IsNullOrEmpty(credential.User.UserName?.Trim()))
-            //    return BadRequest("Nombre de usuario vacío.");
-
-            //if (string.IsNullOrEmpty(credential.User.Password?.Trim()))
-            //    return BadRequest("Contraseña vacía.");
-
-            //if (string.IsNullOrEmpty(credential.Member.FullName?.Trim()))
-            //    return BadRequest("Nombre de persona vacío.");
-
-            //if (string.IsNullOrEmpty(credential.Member.NickName?.Trim()))
-            //    credential.Member.NickName = credential.User.UserName;
-
-            //if (credential.Member.Birthday == null)
-            //    return BadRequest("Revise su fecha de nacimiento.");
-
-            //if (credential.Member.Birthday < DateTime.Parse("1940-01-01"))
-            //    return BadRequest("Excede los 80 años, revise su fecha de nacimiento.");
-
-            //if (string.IsNullOrEmpty(credential.Member.CellPhoneNumber?.Trim()))
-            //    return BadRequest("Número de celular vacío.");
-
-            //var personaResult = BoSecurity.Instance.CreateNewPerson(credential);
-            //if (personaResult.Error)
-            //    return BadRequest(personaResult.Message);
-            //return Ok(personaResult.Model);
-            return NotFound();
+            try
+            {
+                var result = await BoMember.Instance.EditMember(id, request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                if (ex.InnerException != null)
+                    message = ex.InnerException.Message;
+                return BadRequest(message);
+            }
         }
     }
 }

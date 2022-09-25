@@ -8,10 +8,10 @@ namespace KodiaksApi.Areas.Finance
     [Area("Finance")]
     [Route("api/[area]/[controller]")]
     [ApiController]
-    [Authorize(Roles = "SuperAdmin, Admin")]
     public class MovementController : ControllerBase
     {
-        [HttpGet("Get")]
+        [HttpGet()]
+        [Authorize]
         public async Task<ActionResult> Get(long? id = null)
         {
             try
@@ -27,7 +27,8 @@ namespace KodiaksApi.Areas.Finance
                 return BadRequest(message);
             }
         }
-        [HttpPost("Create")]
+        [HttpPost()]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<ActionResult> Post(MovementEntity request)
         {
             try
@@ -43,7 +44,8 @@ namespace KodiaksApi.Areas.Finance
                 return BadRequest(message);
             }            
         }
-        [HttpPut("Update")]
+        [HttpPut()]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> Put(long? id, MovementEntity request)
         {
             try
@@ -59,7 +61,7 @@ namespace KodiaksApi.Areas.Finance
                 return BadRequest(message);
             }
         }
-        [HttpDelete("Delete")]
+        [HttpDelete()]
         [Authorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> Delete(MovementEntity request)
         {

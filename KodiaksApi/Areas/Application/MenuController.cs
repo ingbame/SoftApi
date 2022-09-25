@@ -11,8 +11,8 @@ namespace KodiaksApi.Areas.Application
     [ApiController]
     public class MenuController : ControllerBase
     {
-        [HttpGet("GetMenu"), Authorize]
-        public ActionResult GetMenu()
+        [HttpGet(), Authorize]
+        public ActionResult Get()
         {
             var currentUser = Session.Instance.GetCurrentUser(HttpContext);
             var menu = BoApplication.Instance.GetMenu(currentUser.User.RoleDescription);

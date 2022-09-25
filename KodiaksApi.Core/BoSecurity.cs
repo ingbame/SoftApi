@@ -3,6 +3,7 @@ using KodiaksApi.Entity.Common;
 using KodiaksApi.Entity.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -70,32 +71,10 @@ namespace KodiaksApi.Core
                     response.Message += $"\n{ex.InnerException.Message}";
                 return response;
             }
-        }
-
-        public ResponseEntity<CredentialsDtoEntity> CreateNewPerson(CredentialsEntity newUser)
-        {
-            var response = new ResponseEntity<CredentialsDtoEntity>();
-            try
-            {
-                string newSalt = GenerateSalt();
-                byte[] hashedPassword = GetHash(newUser.User.Password, newSalt);
-                string hashedBase64StringPassword = Convert.ToBase64String(hashedPassword);
-
-                response.Model = DaSecurity.Instance.CreateNewPerson(newUser, newSalt, hashedBase64StringPassword);
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response.Error = true;
-                response.Message = ex.Message;
-                if (ex.InnerException != null)
-                    response.Message += $"\n{ex.InnerException.Message}";
-                return response;
-            }
-        }
+        }        
         #endregion
         #region Metodos privados
-        private string GenerateSalt()
+        public string GenerateSalt()
         {
             string refreshToken = string.Empty;
             byte[] salt;
@@ -106,7 +85,7 @@ namespace KodiaksApi.Core
             }
             return refreshToken;
         }
-        private byte[] GetHash(string PlainPassword, string Salt)
+        public byte[] GetHash(string PlainPassword, string Salt)
         {
             byte[] byteArray = Encoding.Unicode.GetBytes(string.Concat(Salt, PlainPassword));
             using (SHA256 mySHA256 = SHA256.Create())
