@@ -11,7 +11,7 @@ namespace KodiaksApi.Entity.Security
     {
         public UserEntity()
         {
-            Role = new RoleEntity();
+            RoleEn = new RoleEntity();
         }
         public long? UserId { get; set; }
         public string UserName { get; set; }
@@ -23,6 +23,6 @@ namespace KodiaksApi.Entity.Security
         public bool? IsVerified { get; set; }
         public bool? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public RoleEntity Role { get; set; }
+        public RoleEntity RoleEn { get; set; }
     }
 }

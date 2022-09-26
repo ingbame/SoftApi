@@ -45,7 +45,7 @@ namespace KodiaksApi.Data
                     response = new CredentialsEntity();
                     response.User = userResult.CopyProperties(new UserEntity());
                     var getRole = ctx.Roles.Find(userResult.RoleId);
-                    response.User.Role = getRole.CopyProperties(new RoleEntity());
+                    response.User.RoleEn = getRole.CopyProperties(new RoleEntity());
                     var getPerson = ctx.Members.Where(w => w.UserId == userResult.UserId).FirstOrDefault();
                     response.Member = getPerson.CopyProperties(new MemberEntity());
                 }

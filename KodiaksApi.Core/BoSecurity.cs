@@ -109,7 +109,7 @@ namespace KodiaksApi.Core
                 new Claim(ClaimTypes.NameIdentifier, credential.User.UserName),
                 new Claim(ClaimTypes.Name, credential.Member.FullName),
                 new Claim(ClaimTypes.GivenName, credential.Member.NickName),
-                new Claim(ClaimTypes.Role,credential.User.Role.RoleDescription)
+                new Claim(ClaimTypes.Role,credential.User.RoleEn.RoleDescription)
             };
             var expires = DateTime.Now.AddMinutes(5);
             var token = new JwtSecurityToken(

@@ -45,6 +45,20 @@ namespace KodiaksApi.Data.Finance
             });
             return incomesLst;
         }
+        public async Task<decimal> GetTotal()
+        {
+            decimal Total;
+            Total = await Task.Run(() =>
+            {
+                using (var ctx = new DbContextConfig().ExtentionsDbContext())
+                {
+                    decimal incomeTotal = ctx.Movements.Where(w => w.MovementTypeId == 1).Sum(s => s.Amount);
+                    decimal expenseTotal = ctx.Movements.Where(w => w.MovementTypeId == 2).Sum(s => s.Amount);
+                    return incomeTotal - expenseTotal;
+                }
+            });
+            return Total;
+        }
         public async Task<MovementEntity> NewMovement(MovementEntity request)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())

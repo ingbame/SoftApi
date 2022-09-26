@@ -8,5 +8,7 @@ namespace KodiaksApi.Entity.Finance
 {
     public class PaymentMethodEntity
     {
+        public short? MethodId { get; set; }
+        public string MethodDesc { get; set; }
     }
 }

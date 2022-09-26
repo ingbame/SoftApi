@@ -54,6 +54,12 @@ namespace KodiaksApi.Core.Finance
             var response = await DaMovement.Instance.GetMovement(id);
             return response;
         }
+        public async Task<decimal> GetTotal()
+        {
+            var response = await DaMovement.Instance.GetTotal();
+
+            return response;
+        }
         public async Task<MovementEntity> NewMovement(MovementEntity request)
         {
             if (request == null)

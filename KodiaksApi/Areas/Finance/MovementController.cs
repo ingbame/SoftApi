@@ -8,15 +8,31 @@ namespace KodiaksApi.Areas.Finance
     [Area("Finance")]
     [Route("api/[area]/[controller]")]
     [ApiController]
+    [Authorize]
     public class MovementController : ControllerBase
     {
         [HttpGet()]
-        [Authorize]
         public async Task<ActionResult> Get(long? id = null)
         {
             try
             {
                 var searchResult = await BoMovement.Instance.GetMovement(id);
+                return Ok(searchResult);
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                if (ex.InnerException != null)
+                    message = ex.InnerException.Message;
+                return BadRequest(message);
+            }
+        }
+        [HttpGet("Total")]
+        public async Task<ActionResult> GetTotal()
+        {
+            try
+            {
+                var searchResult = await BoMovement.Instance.GetTotal();
                 return Ok(searchResult);
             }
             catch (Exception ex)
