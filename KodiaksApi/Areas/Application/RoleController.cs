@@ -1,23 +1,21 @@
 ﻿using KodiaksApi.Core.Application;
-using KodiaksApi.Core.Statistics;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KodiaksApi.Areas.Statistics
+namespace KodiaksApi.Areas.Application
 {
-    [Area("Statistics")]
+    [Area("Application")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Authorize]
-    public class BattingThrowingSidesController : ControllerBase
+    public class RoleController : ControllerBase
     {
         [HttpGet()]
         public async Task<ActionResult> Get(short? id = null)
         {
             try
             {
-                var searchResult = await BoBattingThrowingSides.Instance.GetBattingThrowingSides(id);
+                var searchResult = await BoRole.Instance.GetRole(id);
                 return Ok(searchResult);
             }
             catch (Exception ex)
