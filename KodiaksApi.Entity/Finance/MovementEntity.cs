@@ -12,6 +12,7 @@
         public string AdditionalComment { get; set; }
         public string EvidenceUrl { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public long CreatedBy { get; set; }
+        public string ByUser { get; set; }
+        public long? CreatedBy { get; set; }
     }
 }

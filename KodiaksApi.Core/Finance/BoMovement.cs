@@ -1,4 +1,5 @@
-﻿using KodiaksApi.Data.Finance;
+﻿using KodiaksApi.Data;
+using KodiaksApi.Data.Finance;
 using KodiaksApi.Entity.Finance;
 
 namespace KodiaksApi.Core.Finance
@@ -45,9 +46,8 @@ namespace KodiaksApi.Core.Finance
 
             if (!request.Amount.HasValue || request.Amount <= 0)
                 throw new Exception("El monto es incorrecto, debe ser un número mayor a $0.00.");
-
-            if (string.IsNullOrEmpty(request.EvidenceUrl))
-                throw new Exception("Evidencia vacía.");
+            if(!request.CreatedBy.HasValue || request.CreatedBy <= 0)
+                throw new Exception("No se puede guardar, si su sesion no está activa.");
         }
         public async Task<List<MovementSelEntity>> GetMovement(long? id = null)
         {
@@ -64,6 +64,15 @@ namespace KodiaksApi.Core.Finance
         {
             if (request == null)
                 throw new Exception("No se ha ingresado información");
+            if (!string.IsNullOrEmpty(request.ByUser))
+            {
+                var credential = DaSecurity.Instance.GetUser(request.ByUser);
+                if (credential != null)
+                    request.CreatedBy = credential.User.UserId;
+                else
+                    throw new Exception("Usuario no existe.");
+            }
+
             isValidMovementModel(request);
             var response = await DaMovement.Instance.NewMovement(request);
             return response;
