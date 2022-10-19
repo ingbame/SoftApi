@@ -1,5 +1,6 @@
 ﻿using KodiaksApi.Core.Finance;
 using KodiaksApi.Entity.Finance;
+using KodiaksApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +13,30 @@ namespace KodiaksApi.Areas.Finance
     public class MovementController : ControllerBase
     {
         [HttpGet()]
-        public async Task<ActionResult> Get(long? id = null)
+        public async Task<ActionResult> Get(long? id = null, int? year = null, int? month = null)
         {
             try
             {
-                var searchResult = await BoMovement.Instance.GetMovement(id);
-                return Ok(searchResult);
+                var searchResult = await BoMovement.Instance.GetMovement(id, year, month);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = searchResult });
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                if (ex.InnerException != null)
+                    message = ex.InnerException.Message;
+                return BadRequest(message);
+            }
+        }
+        [HttpGet("GetByYearMonth")]
+        public async Task<ActionResult> Get(int? year, int? month)
+        {
+            try
+            {
+                var searchResult = await BoMovement.Instance.GetMovementByMonthYear(year, month);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)
             {
@@ -33,7 +52,8 @@ namespace KodiaksApi.Areas.Finance
             try
             {
                 var searchResult = await BoMovement.Instance.GetTotal();
-                return Ok(searchResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)
             {
@@ -50,24 +70,26 @@ namespace KodiaksApi.Areas.Finance
             try
             {
                 var incomeResult = await BoMovement.Instance.NewMovement(request);
-                return Ok(incomeResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = incomeResult });
             }
             catch (Exception ex)
             {
                 var message = ex.Message;
-                if(ex.InnerException != null)
+                if (ex.InnerException != null)
                     message = ex.InnerException.Message;
                 return BadRequest(message);
-            }            
+            }
         }
         [HttpPut()]
         [Authorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> Put(long? id, MovementEntity request)
         {
             try
-            {                
+            {
                 var incomeResult = await BoMovement.Instance.EditMovement(id, request);
-                return Ok(incomeResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = incomeResult });
             }
             catch (Exception ex)
             {
@@ -84,7 +106,8 @@ namespace KodiaksApi.Areas.Finance
             try
             {
                 var incomeResult = await BoMovement.Instance.DeleteMovement(request);
-                return Ok(incomeResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = incomeResult });
 
             }
             catch (Exception ex)

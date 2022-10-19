@@ -1,7 +1,9 @@
-﻿using KodiaksApi.Data;
+﻿using KodiaksApi.Data.Security;
 using KodiaksApi.Entity.Common;
 using KodiaksApi.Entity.Security;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -32,7 +34,7 @@ namespace KodiaksApi.Core
         }
         #endregion
         #region Metodos publicos
-        public ResponseEntity<string> LoginAuthentication(LoginEntity userReq, JwtConfEntity jwtConf)
+        public ResponseEntity<string> LoginAuthentication(LoginEntity userReq)
         {
             var response = new ResponseEntity<string>();
             try
@@ -46,19 +48,19 @@ namespace KodiaksApi.Core
                     if (isPasswordMatched)
                     {
                         //Genera Token JWT
-                        var responseToken = GenerateLoginToken(credential, jwtConf);
+                        var responseToken = GenerateLoginToken(credential);
                         response.Model = responseToken;
                     }
                     else
                     {
                         response.Error = true;
-                        response.Message = "Contraseña incorrecta";
+                        response.Message = "Credenciales inválidas";
                     }
                 }
                 else
                 {
                     response.Error = true;
-                    response.Message = "El usuario no existe";
+                    response.Message = "Credenciales inválidas";
                 }
                 //response = DaSecurity.Instance.Users();
                 return response;
@@ -71,7 +73,52 @@ namespace KodiaksApi.Core
                     response.Message += $"\n{ex.InnerException.Message}";
                 return response;
             }
-        }        
+        }
+        public async Task<ResponseEntity<string>> ChangePassword(LoginEntity userReq)
+        {
+            var response = new ResponseEntity<string>();
+            try
+            {
+                var credential = DaSecurity.Instance.GetUser(userReq.UserName);
+                if (credential != null)
+                {
+                    string newSalt = GenerateSalt();
+                    byte[] hashedPassword = GetHash(userReq.Password, newSalt);
+                    string hashedBase64StringPassword = Convert.ToBase64String(hashedPassword);
+
+                    var usrEdit = new UserEntity
+                    {
+                        UserId = credential.User.UserId,
+                        UserName = userReq.UserName,
+                        PasswordSalt = newSalt,
+                        Password = hashedBase64StringPassword
+                    };
+
+                    var isEdited = await DaSecurity.Instance.changePassword(usrEdit);
+                    if (isEdited)
+                        response.Model = string.Empty;
+                    else
+                    {
+                        response.Error = true;
+                        response.Message = "Ocurrió un error al cambiar la contraseña";
+                    }
+                }
+                else
+                {
+                    response.Error = true;
+                    response.Message = "Usuario no encontrado";
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = true;
+                response.Message = ex.Message;
+                if (ex.InnerException != null)
+                    response.Message += $"\n{ex.InnerException.Message}";
+                return response;
+            }
+        }
         #endregion
         #region Metodos privados
         public string GenerateSalt()
@@ -99,8 +146,19 @@ namespace KodiaksApi.Core
             string inputHashedPassword = Convert.ToBase64String(GetHash(InputPassword, Salt));
             return inputHashedPassword.Equals(ExistingHashedBase64StringPassword);
         }
-        private string GenerateLoginToken(CredentialsEntity credential, JwtConfEntity jwtConf)
+        private string GenerateLoginToken(CredentialsEntity credential)
         {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var jwtConf = new JwtConfEntity
+            {
+                Key = configuration["Jwt:Key"],
+                Issuer = configuration["Jwt:Issuer"],
+                Audience = configuration["Jwt:Audience"]
+            };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConf.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -109,7 +167,8 @@ namespace KodiaksApi.Core
                 new Claim(ClaimTypes.NameIdentifier, credential.User.UserName),
                 new Claim(ClaimTypes.Name, credential.Member.FullName),
                 new Claim(ClaimTypes.GivenName, credential.Member.NickName),
-                new Claim(ClaimTypes.Role,credential.User.RoleEn.RoleDescription)
+                new Claim(ClaimTypes.Role,credential.User.RoleEn.RoleDescription),
+                new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject( new { credential.User.CanEdit }))
             };
             var expires = DateTime.Now.AddMinutes(5);
             var token = new JwtSecurityToken(

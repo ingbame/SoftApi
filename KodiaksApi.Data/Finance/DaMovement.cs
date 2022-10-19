@@ -29,7 +29,7 @@ namespace KodiaksApi.Data.Finance
             }
         }
         #endregion
-        public async Task<List<MovementSelEntity>> GetMovement(long? id = null)
+        public async Task<List<MovementSelEntity>> GetMovement(long? id = null, int? year = null, int? month = null)
         {
             List<MovementSelEntity> incomesLst = new List<MovementSelEntity>();
             await Task.Run(() =>
@@ -37,14 +37,41 @@ namespace KodiaksApi.Data.Finance
                 using (var ctx = new DbContextConfig().ExtentionsDbContext())
                 {
                     SqlParameter pMovementId = new SqlParameter("@MovementId", SqlDbType.BigInt);
-                    pMovementId.Value = !id.HasValue ? DBNull.Value : id;
-                    var sqlCmnd = $"EXEC [Fina].[SPSelMovements] {pMovementId.ParameterName}";
+                    SqlParameter pYear = new SqlParameter("@Year", SqlDbType.Int);
+                    SqlParameter pMonth = new SqlParameter("@Month", SqlDbType.Int);
 
-                    incomesLst = ctx.Set<MovementSelEntity>().FromSqlRaw(sqlCmnd, pMovementId).ToList();
+                    pMovementId.Value = !id.HasValue ? DBNull.Value : id;
+                    pYear.Value = !year.HasValue ? DBNull.Value : year;
+                    pMonth.Value = !month.HasValue ? DBNull.Value : month;
+
+                    var sqlCmnd = $"EXEC [Fina].[SPSelMovements] {pMovementId.ParameterName}, {pYear.ParameterName}, {pMonth.ParameterName}";
+
+                    incomesLst = ctx.Set<MovementSelEntity>().FromSqlRaw(sqlCmnd, pMovementId, pYear, pMonth).ToList();
                 }
             });
             return incomesLst;
         }
+        public async Task<List<MovementSelYearMonthEntity>> GetMovementByMonthYear(int? year, int? month)
+        {
+            List<MovementSelYearMonthEntity> incomesLst = new List<MovementSelYearMonthEntity>();
+            await Task.Run(() =>
+            {
+                using (var ctx = new DbContextConfig().ExtentionsDbContext())
+                {
+                    SqlParameter pYear = new SqlParameter("@Year", SqlDbType.Int);
+                    SqlParameter pMonth = new SqlParameter("@Month", SqlDbType.Int);
+                    pYear.Value = !year.HasValue ? DBNull.Value : year;
+                    pMonth.Value = !month.HasValue ? DBNull.Value : month;
+                    var sqlCmnd = $"EXEC [Fina].[SPSelMovementsByMonthYear] {pYear.ParameterName}, {pMonth.ParameterName}";
+
+                    incomesLst = ctx.Set<MovementSelYearMonthEntity>().FromSqlRaw(sqlCmnd, pYear, pMonth).ToList();
+                }
+            });
+            return incomesLst;
+        }
+
+        //[SPSelMovementsByMonthYear]
+
         public async Task<decimal> GetTotal()
         {
             decimal Total;

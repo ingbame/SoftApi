@@ -1,5 +1,6 @@
 ﻿using KodiaksApi.Core.Application;
 using KodiaksApi.Core.Statistics;
+using KodiaksApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,8 @@ namespace KodiaksApi.Areas.Statistics
             try
             {
                 var searchResult = await BoBattingThrowingSides.Instance.GetBattingThrowingSides(id);
-                return Ok(searchResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, Response = searchResult });
             }
             catch (Exception ex)
             {

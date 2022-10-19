@@ -1,4 +1,5 @@
 ﻿using KodiaksApi.Core.Finance;
+using KodiaksApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,8 @@ namespace KodiaksApi.Areas.Finance
             try
             {
                 var searchResult = await BoMovementType.Instance.GetMovementType(id);
-                return Ok(searchResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)
             {

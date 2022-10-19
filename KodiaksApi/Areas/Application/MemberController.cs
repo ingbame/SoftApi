@@ -1,8 +1,10 @@
-﻿using KodiaksApi.Core;
+﻿using System;
+using KodiaksApi.Core;
 using KodiaksApi.Core.Application;
 using KodiaksApi.Core.Finance;
 using KodiaksApi.Entity.Application;
 using KodiaksApi.Entity.Security;
+using KodiaksApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +23,8 @@ namespace KodiaksApi.Areas.Application
             try
             {
                 var searchResult = await BoMember.Instance.GetMember(id);
-                return Ok(searchResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)
             {
@@ -37,7 +40,8 @@ namespace KodiaksApi.Areas.Application
             try
             {
                 var personaResult = await BoMember.Instance.CreateMember(request);
-                return Ok(personaResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = personaResult });
             }
             catch (Exception ex)
             {
@@ -53,7 +57,8 @@ namespace KodiaksApi.Areas.Application
             try
             {
                 var result = await BoMember.Instance.EditMember(id, request);
-                return Ok(result);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = result });
             }
             catch (Exception ex)
             {

@@ -23,6 +23,7 @@ namespace KodiaksApi.Data.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<MovementSelEntity>(ent => { ent.HasNoKey(); });
+            modelBuilder.Entity<MovementSelYearMonthEntity>(ent => { ent.HasNoKey(); });
             modelBuilder.Entity<MemberSelEntity>(ent => { ent.HasNoKey(); });
         }
     }

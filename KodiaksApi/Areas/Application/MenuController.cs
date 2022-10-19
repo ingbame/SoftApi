@@ -1,5 +1,6 @@
 ﻿using KodiaksApi.ApiCommon;
 using KodiaksApi.Core;
+using KodiaksApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,8 @@ namespace KodiaksApi.Areas.Application
             var menu = BoApplication.Instance.GetMenu(currentUser.User.RoleDescription);
             if (menu.Error)
                 return BadRequest(menu.Message);
-            return Ok(menu.Model);
+            var token = Extensions.RefreshLoginToken(User.Claims);
+            return Ok(new { token, response = menu.Model });
         }
         #region Private Methods
         #endregion

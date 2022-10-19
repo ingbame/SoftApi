@@ -1,4 +1,4 @@
-﻿using KodiaksApi.Data;
+﻿using KodiaksApi.Data.Security;
 using KodiaksApi.Data.Finance;
 using KodiaksApi.Entity.Finance;
 
@@ -46,12 +46,17 @@ namespace KodiaksApi.Core.Finance
 
             if (!request.Amount.HasValue || request.Amount <= 0)
                 throw new Exception("El monto es incorrecto, debe ser un número mayor a $0.00.");
-            if(!request.CreatedBy.HasValue || request.CreatedBy <= 0)
+            if (!request.CreatedBy.HasValue || request.CreatedBy <= 0)
                 throw new Exception("No se puede guardar, si su sesion no está activa.");
         }
-        public async Task<List<MovementSelEntity>> GetMovement(long? id = null)
+        public async Task<List<MovementSelEntity>> GetMovement(long? id = null, int? year = null, int? month = null)
         {
-            var response = await DaMovement.Instance.GetMovement(id);
+            var response = await DaMovement.Instance.GetMovement(id, year, month);
+            return response;
+        }
+        public async Task<List<MovementSelYearMonthEntity>> GetMovementByMonthYear(int? year, int? month)
+        {
+            var response = await DaMovement.Instance.GetMovementByMonthYear(year, month);
             return response;
         }
         public async Task<decimal> GetTotal()

@@ -1,4 +1,5 @@
 ﻿using KodiaksApi.Core.Application;
+using KodiaksApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,8 @@ namespace KodiaksApi.Areas.Application
             try
             {
                 var searchResult = await BoRole.Instance.GetRole(id);
-                return Ok(searchResult);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)
             {
