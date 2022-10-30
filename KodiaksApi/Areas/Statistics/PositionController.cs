@@ -1,0 +1,30 @@
+﻿using KodiaksApi.Core.Statistics;
+using KodiaksApi.Util;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace KodiaksApi.Areas.Statistics
+{
+    [Area("Statistics"), Route("api/[area]/[controller]"), ApiController, Authorize]
+    public class PositionController : ControllerBase
+    {
+        [HttpGet()]
+        public async Task<ActionResult> Get(short? id = null)
+        {
+            try
+            {
+                var searchResult = await BoPosition.Instance.GetPosition(id);
+                var token = Extensions.RefreshLoginToken(User.Claims);
+                return Ok(new { token, response = searchResult });
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                if (ex.InnerException != null)
+                    message = ex.InnerException.Message;
+                return BadRequest(message);
+            }
+        }
+    }
+}

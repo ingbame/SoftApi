@@ -42,7 +42,7 @@ namespace KodiaksApi.Data.Security
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 var response = default(CredentialsEntity);
-                var userResult = ctx.Users.Where(w => w.UserName.ToLower().Equals(user.ToLower())).FirstOrDefault();
+                var userResult = ctx.Users.Where(w => w.UserName.ToLower().Equals(user.ToLower()) && w.IsVerified == true).FirstOrDefault();
                 if (userResult != null)
                 {
                     response = new CredentialsEntity();

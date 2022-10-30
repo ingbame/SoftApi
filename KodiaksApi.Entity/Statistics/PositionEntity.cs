@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace KodiaksApi.Entity.Statistics
 {
-    internal class PositionEntity
+    public class PositionEntity
     {
+        public short? PositionId { get; set; }
+        public string KeyValue { get; set; }
+        public string PositionDesc { get; set; }
     }
 }
