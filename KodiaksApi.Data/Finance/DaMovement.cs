@@ -1,12 +1,12 @@
-﻿using KodiaksApi.Data.Context;
-using KodiaksApi.Data.DbModels;
-using KodiaksApi.Entity.Finance;
-using KodiaksApi.Util;
+﻿using SoftApi.Data.Context;
+using SoftApi.Data.DbModels;
+using SoftApi.Entity.Finance;
+using SoftApi.Util;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace KodiaksApi.Data.Finance
+namespace SoftApi.Data.Finance
 {
     public class DaMovement
     {

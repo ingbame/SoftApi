@@ -37,10 +37,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myCors, builder =>
     {
-        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-        .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-        //builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "kodiaksteam.com")
-        //.AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        //builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "softbeer.com").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 //Autenticación por token Jwt

@@ -1,13 +1,13 @@
-﻿using KodiaksApi.Data.Context;
-using KodiaksApi.Entity.Statistics;
-using KodiaksApi.Util;
+﻿using SoftApi.Data.Context;
+using SoftApi.Entity.Statistics;
+using SoftApi.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Data.Statistics
+namespace SoftApi.Data.Statistics
 {
     public class DaPosition
     {

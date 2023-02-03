@@ -1,6 +1,6 @@
-﻿using KodiaksApi.Data.Security;
-using KodiaksApi.Entity.Common;
-using KodiaksApi.Entity.Security;
+﻿using SoftApi.Data.Security;
+using SoftApi.Entity.Common;
+using SoftApi.Entity.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace KodiaksApi.Core
+namespace SoftApi.Core
 {
     public class BoSecurity
     {

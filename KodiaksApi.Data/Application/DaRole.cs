@@ -1,15 +1,15 @@
-﻿using KodiaksApi.Data.Context;
-using KodiaksApi.Data.Statistics;
-using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Statistics;
-using KodiaksApi.Util;
+﻿using SoftApi.Data.Context;
+using SoftApi.Data.Statistics;
+using SoftApi.Entity.Application;
+using SoftApi.Entity.Statistics;
+using SoftApi.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Data.Application
+namespace SoftApi.Data.Application
 {
     public class DaRole
     {

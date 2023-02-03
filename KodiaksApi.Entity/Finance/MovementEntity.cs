@@ -1,4 +1,4 @@
-﻿namespace KodiaksApi.Entity.Finance
+﻿namespace SoftApi.Entity.Finance
 {
     public class MovementEntity
     {

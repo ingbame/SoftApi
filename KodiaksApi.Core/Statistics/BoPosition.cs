@@ -1,12 +1,12 @@
-﻿using KodiaksApi.Data.Statistics;
-using KodiaksApi.Entity.Statistics;
+﻿using SoftApi.Data.Statistics;
+using SoftApi.Entity.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Core.Statistics
+namespace SoftApi.Core.Statistics
 {
     public class BoPosition
     {

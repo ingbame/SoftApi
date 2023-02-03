@@ -1,11 +1,11 @@
-﻿using KodiaksApi.Core.Application;
-using KodiaksApi.Core.Statistics;
-using KodiaksApi.Util;
+﻿using SoftApi.Core.Application;
+using SoftApi.Core.Statistics;
+using SoftApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KodiaksApi.Areas.Statistics
+namespace SoftApi.Areas.Statistics
 {
     [Area("Statistics")]
     [Route("api/[area]/[controller]")]

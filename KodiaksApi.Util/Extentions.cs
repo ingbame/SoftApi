@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Util
+namespace SoftApi.Util
 {
     public static class Extensions
     {

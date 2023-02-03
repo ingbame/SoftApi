@@ -1,9 +1,9 @@
-﻿using KodiaksApi.Data.Context;
-using KodiaksApi.Data.DbModels;
-using KodiaksApi.Data.Finance;
-using KodiaksApi.Entity.Finance;
-using KodiaksApi.Entity.Statistics;
-using KodiaksApi.Util;
+﻿using SoftApi.Data.Context;
+using SoftApi.Data.DbModels;
+using SoftApi.Data.Finance;
+using SoftApi.Entity.Finance;
+using SoftApi.Entity.Statistics;
+using SoftApi.Util;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Data.Statistics
+namespace SoftApi.Data.Statistics
 {
     public class DaRoster
     {

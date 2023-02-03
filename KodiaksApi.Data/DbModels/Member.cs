@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KodiaksApi.Data.DbModels
+namespace SoftApi.Data.DbModels
 {
     public partial class Member
     {
         public Member()
         {
+            DetailOfOurGamePlayeds = new HashSet<DetailOfOurGamePlayed>();
             Movements = new HashSet<Movement>();
         }
 
@@ -23,6 +24,7 @@ namespace KodiaksApi.Data.DbModels
 
         public virtual BattingThrowingSide Btside { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<DetailOfOurGamePlayed> DetailOfOurGamePlayeds { get; set; }
         public virtual ICollection<Movement> Movements { get; set; }
     }
 }

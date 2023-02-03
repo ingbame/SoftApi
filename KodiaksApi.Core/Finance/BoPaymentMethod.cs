@@ -1,12 +1,12 @@
-﻿using KodiaksApi.Data.Finance;
-using KodiaksApi.Entity.Finance;
+﻿using SoftApi.Data.Finance;
+using SoftApi.Entity.Finance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Core.Finance
+namespace SoftApi.Core.Finance
 {
     public class BoPaymentMethod
     {

@@ -1,13 +1,13 @@
-﻿using KodiaksApi.Data.Context;
-using KodiaksApi.Entity.Application;
-using KodiaksApi.Util;
+﻿using SoftApi.Data.Context;
+using SoftApi.Entity.Application;
+using SoftApi.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Data
+namespace SoftApi.Data
 {
     public class DaApplication
     {

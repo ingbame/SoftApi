@@ -1,15 +1,15 @@
-﻿using KodiaksApi.Data.Finance;
-using KodiaksApi.Data.Security;
-using KodiaksApi.Data.Statistics;
-using KodiaksApi.Entity.Finance;
-using KodiaksApi.Entity.Statistics;
+﻿using SoftApi.Data.Finance;
+using SoftApi.Data.Security;
+using SoftApi.Data.Statistics;
+using SoftApi.Entity.Finance;
+using SoftApi.Entity.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Core.Statistics
+namespace SoftApi.Core.Statistics
 {
     public class BoRoster
     {

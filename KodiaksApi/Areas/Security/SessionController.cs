@@ -1,6 +1,6 @@
-﻿using KodiaksApi.Core;
-using KodiaksApi.Entity.Security;
-using KodiaksApi.Util;
+﻿using SoftApi.Core;
+using SoftApi.Entity.Security;
+using SoftApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 
-namespace KodiaksApi.Areas.Security
+namespace SoftApi.Areas.Security
 {
     [Area("Security")]
     [Route("api/[area]/[controller]")]

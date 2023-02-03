@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KodiaksApi.Entity\KodiaksApi.Entity.csproj" />
-    <ProjectReference Include="..\KodiaksApi.Util\KodiaksApi.Util.csproj" />
+    <ProjectReference Include="..\KodiaksApi.Entity\SoftApi.Entity.csproj" />
+    <ProjectReference Include="..\KodiaksApi.Util\SoftApi.Util.csproj" />
   </ItemGroup>
 
   <ItemGroup>

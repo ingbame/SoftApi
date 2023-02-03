@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using KodiaksApi.Data.DbModels;
+using SoftApi.Data.DbModels;
 
-namespace KodiaksApi.Data.Context
+namespace SoftApi.Data.Context
 {
-    public partial class KodiaksDbContext : DbContext
+    public partial class SoftDbContext : DbContext
     {
-        public KodiaksDbContext()
+        public SoftDbContext()
         {
         }
 
-        public KodiaksDbContext(DbContextOptions<KodiaksDbContext> options)
+        public SoftDbContext(DbContextOptions<SoftDbContext> options)
             : base(options)
         {
         }
@@ -20,19 +20,27 @@ namespace KodiaksApi.Data.Context
         public virtual DbSet<AssignRoleMenu> AssignRoleMenus { get; set; }
         public virtual DbSet<BattingThrowingSide> BattingThrowingSides { get; set; }
         public virtual DbSet<Concept> Concepts { get; set; }
+        public virtual DbSet<DetailOfOurGamePlayed> DetailOfOurGamePlayeds { get; set; }
+        public virtual DbSet<DetailOfTheRivalGamePlayed> DetailOfTheRivalGamePlayeds { get; set; }
+        public virtual DbSet<GamesPlayed> GamesPlayeds { get; set; }
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MenuItem> MenuItems { get; set; }
         public virtual DbSet<Movement> Movements { get; set; }
         public virtual DbSet<MovementType> MovementTypes { get; set; }
+        public virtual DbSet<OpposingTeamMember> OpposingTeamMembers { get; set; }
         public virtual DbSet<PasswordsHistory> PasswordsHistories { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<RivalTeam> RivalTeams { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Roster> Rosters { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (!optionsBuilder.IsConfigured)
+            {
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -100,6 +108,81 @@ namespace KodiaksApi.Data.Context
                     .IsRequired()
                     .HasMaxLength(3)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<DetailOfOurGamePlayed>(entity =>
+            {
+                entity.HasKey(e => e.OurDetailId)
+                    .HasName("PK_Stats_DetailOfOurGamePlayed_OurDetailId");
+
+                entity.ToTable("DetailOfOurGamePlayed", "Stats");
+
+                entity.HasIndex(e => new { e.Inning, e.MemberId }, "PK_Stats_DetailOfOurGamePlayed_Inning_MemberId")
+                    .IsUnique();
+
+                entity.Property(e => e.CenterValue)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.DetailOfOurGamePlayeds)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Stats_DetailOfOurGamePlayed_GameId");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.DetailOfOurGamePlayeds)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Stats_DetailOfOurGamePlayed_MemberId");
+            });
+
+            modelBuilder.Entity<DetailOfTheRivalGamePlayed>(entity =>
+            {
+                entity.HasKey(e => e.RivalDetailId)
+                    .HasName("PK_Stats_DetailOfTheRivalGamePlayed_RivalDetailId");
+
+                entity.ToTable("DetailOfTheRivalGamePlayed", "Stats");
+
+                entity.HasIndex(e => new { e.Inning, e.MemberId }, "PK_Stats_DetailOfTheRivalGamePlayed_Inning_MemberId")
+                    .IsUnique();
+
+                entity.Property(e => e.CenterValue)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.DetailOfTheRivalGamePlayeds)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Stats_DetailOfTheRivalGamePlayed_GameId");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.DetailOfTheRivalGamePlayeds)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Stats_DetailOfTheRivalGamePlayed_MemberId");
+            });
+
+            modelBuilder.Entity<GamesPlayed>(entity =>
+            {
+                entity.HasKey(e => e.GameId)
+                    .HasName("PK_Stats_GamesPlayed_GameId");
+
+                entity.ToTable("GamesPlayed", "Stats");
+
+                entity.HasIndex(e => new { e.RivalTeamId, e.Date }, "UK_Stats_GamesPlayed_RivalTeamId_Date")
+                    .IsUnique();
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.WeWon).HasColumnName("WeWON");
+
+                entity.HasOne(d => d.RivalTeam)
+                    .WithMany(p => p.GamesPlayeds)
+                    .HasForeignKey(d => d.RivalTeamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Stats_GamesPlayed_RivalTeamId");
             });
 
             modelBuilder.Entity<Member>(entity =>
@@ -181,7 +264,7 @@ namespace KodiaksApi.Data.Context
 
                 entity.Property(e => e.EvidenceUrl).IsUnicode(false);
 
-                entity.Property(e => e.MovementDate).HasColumnType("datetime");
+                entity.Property(e => e.MovementDate).HasColumnType("date");
 
                 entity.HasOne(d => d.Concept)
                     .WithMany(p => p.Movements)
@@ -235,6 +318,19 @@ namespace KodiaksApi.Data.Context
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<OpposingTeamMember>(entity =>
+            {
+                entity.HasKey(e => e.MemberId)
+                    .HasName("PK_Stats_OpposingTeamMembers_MemberId");
+
+                entity.ToTable("OpposingTeamMembers", "Stats");
+
+                entity.Property(e => e.MemberName)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<PasswordsHistory>(entity =>
             {
                 entity.HasKey(e => e.HistoryId)
@@ -275,6 +371,20 @@ namespace KodiaksApi.Data.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.PositionDesc)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RivalTeam>(entity =>
+            {
+                entity.ToTable("RivalTeam", "Stats");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.TeamName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });

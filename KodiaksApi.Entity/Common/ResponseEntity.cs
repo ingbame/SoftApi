@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Entity.Common
+namespace SoftApi.Entity.Common
 {
     public class ResponseEntity<TModel> where TModel : class
     {

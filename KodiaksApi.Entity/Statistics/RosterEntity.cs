@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Entity.Statistics
+namespace SoftApi.Entity.Statistics
 {
     public class RosterEntity
     {

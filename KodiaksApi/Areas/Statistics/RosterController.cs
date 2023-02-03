@@ -1,14 +1,14 @@
-﻿using KodiaksApi.Core.Finance;
-using KodiaksApi.Core.Statistics;
-using KodiaksApi.Entity.Finance;
-using KodiaksApi.Entity.Statistics;
-using KodiaksApi.Util;
+﻿using SoftApi.Core.Finance;
+using SoftApi.Core.Statistics;
+using SoftApi.Entity.Finance;
+using SoftApi.Entity.Statistics;
+using SoftApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace KodiaksApi.Areas.Statistics
+namespace SoftApi.Areas.Statistics
 {
     [Area("Statistics"), Route("api/[area]/[controller]"), ApiController, Authorize]
     public class RosterController : ControllerBase

@@ -1,8 +1,8 @@
-﻿using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Security;
+﻿using SoftApi.Entity.Application;
+using SoftApi.Entity.Security;
 using System.Security.Claims;
 
-namespace KodiaksApi.ApiCommon
+namespace SoftApi.ApiCommon
 {
     public class Session
     {

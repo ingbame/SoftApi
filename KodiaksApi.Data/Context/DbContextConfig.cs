@@ -1,31 +1,31 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace KodiaksApi.Data.Context
+namespace SoftApi.Data.Context
 {
     public class DbContextConfig
     {
-        public KodiaksDbContext CreateDbContext()
+        public SoftDbContext CreateDbContext()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var builder = new DbContextOptionsBuilder<KodiaksDbContext>();
+            var builder = new DbContextOptionsBuilder<SoftDbContext>();
             var connectionString = configuration.GetConnectionString("KodiaksDbConn");
             builder.UseSqlServer(connectionString);
-            return new KodiaksDbContext(builder.Options);
+            return new SoftDbContext(builder.Options);
         }
-        public KodiaksDdExtentions ExtentionsDbContext()
+        public SoftDdExtentions ExtentionsDbContext()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var builder = new DbContextOptionsBuilder<KodiaksDbContext>();
+            var builder = new DbContextOptionsBuilder<SoftDbContext>();
             var connectionString = configuration.GetConnectionString("KodiaksDbConn");
             builder.UseSqlServer(connectionString);
-            return new KodiaksDdExtentions(builder.Options);
+            return new SoftDdExtentions(builder.Options);
         }
     }
 }

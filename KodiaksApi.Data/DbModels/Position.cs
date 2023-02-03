@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KodiaksApi.Data.DbModels
+namespace SoftApi.Data.DbModels
 {
     public partial class Position
     {
@@ -13,6 +13,7 @@ namespace KodiaksApi.Data.DbModels
         public short PositionId { get; set; }
         public string KeyValue { get; set; }
         public string PositionDesc { get; set; }
+        public int? Order { get; set; }
 
         public virtual ICollection<Roster> Rosters { get; set; }
     }

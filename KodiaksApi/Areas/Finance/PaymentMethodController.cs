@@ -1,10 +1,10 @@
-﻿using KodiaksApi.Core.Finance;
-using KodiaksApi.Util;
+﻿using SoftApi.Core.Finance;
+using SoftApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KodiaksApi.Areas.Finance
+namespace SoftApi.Areas.Finance
 {
     [Area("Finance")]
     [Route("api/[area]/[controller]")]

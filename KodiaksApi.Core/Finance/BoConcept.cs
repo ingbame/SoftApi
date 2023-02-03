@@ -1,7 +1,7 @@
-﻿using KodiaksApi.Data.Finance;
-using KodiaksApi.Entity.Finance;
+﻿using SoftApi.Data.Finance;
+using SoftApi.Entity.Finance;
 
-namespace KodiaksApi.Core.Finance
+namespace SoftApi.Core.Finance
 {
     public class BoConcept
     {

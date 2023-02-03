@@ -1,13 +1,13 @@
-﻿using KodiaksApi.Data;
-using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Common;
+﻿using SoftApi.Data;
+using SoftApi.Entity.Application;
+using SoftApi.Entity.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Core
+namespace SoftApi.Core
 {
     public class BoApplication
     {

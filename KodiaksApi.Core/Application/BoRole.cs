@@ -1,16 +1,16 @@
-﻿using KodiaksApi.Core.Statistics;
-using KodiaksApi.Data.Application;
-using KodiaksApi.Data.Statistics;
-using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Common;
-using KodiaksApi.Entity.Statistics;
+﻿using SoftApi.Core.Statistics;
+using SoftApi.Data.Application;
+using SoftApi.Data.Statistics;
+using SoftApi.Entity.Application;
+using SoftApi.Entity.Common;
+using SoftApi.Entity.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Core.Application
+namespace SoftApi.Core.Application
 {
     public class BoRole
     {

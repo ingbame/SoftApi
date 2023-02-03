@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KodiaksApi.Data.DbModels
+namespace SoftApi.Data.DbModels
 {
     public partial class PasswordsHistory
     {

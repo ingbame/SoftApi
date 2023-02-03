@@ -1,4 +1,4 @@
-﻿namespace KodiaksApi.Entity.Application
+﻿namespace SoftApi.Entity.Application
 {
     public partial class MemberEntity
     {

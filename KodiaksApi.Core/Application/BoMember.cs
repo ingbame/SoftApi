@@ -1,10 +1,10 @@
-﻿using KodiaksApi.Data;
-using KodiaksApi.Data.Application;
-using KodiaksApi.Data.Finance;
-using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Common;
-using KodiaksApi.Entity.Finance;
-using KodiaksApi.Entity.Security;
+﻿using SoftApi.Data;
+using SoftApi.Data.Application;
+using SoftApi.Data.Finance;
+using SoftApi.Entity.Application;
+using SoftApi.Entity.Common;
+using SoftApi.Entity.Finance;
+using SoftApi.Entity.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Core.Application
+namespace SoftApi.Core.Application
 {
     public class BoMember
     {

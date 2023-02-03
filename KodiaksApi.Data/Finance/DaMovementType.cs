@@ -1,7 +1,7 @@
-﻿using KodiaksApi.Data.Context;
-using KodiaksApi.Entity.Finance;
-using KodiaksApi.Entity.Statistics;
-using KodiaksApi.Util;
+﻿using SoftApi.Data.Context;
+using SoftApi.Entity.Finance;
+using SoftApi.Entity.Statistics;
+using SoftApi.Util;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Data.Finance
+namespace SoftApi.Data.Finance
 {
     public class DaMovementType
     {

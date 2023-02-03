@@ -1,9 +1,9 @@
-﻿using KodiaksApi.Core.Application;
-using KodiaksApi.Util;
+﻿using SoftApi.Core.Application;
+using SoftApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KodiaksApi.Areas.Application
+namespace SoftApi.Areas.Application
 {
     [Area("Application")]
     [Route("api/[area]/[controller]")]

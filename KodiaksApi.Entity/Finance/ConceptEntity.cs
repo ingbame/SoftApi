@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Entity.Finance
+namespace SoftApi.Entity.Finance
 {
     public class ConceptEntity
     {

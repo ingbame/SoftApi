@@ -1,6 +1,6 @@
-﻿using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Finance;
-using KodiaksApi.Entity.Statistics;
+﻿using SoftApi.Entity.Application;
+using SoftApi.Entity.Finance;
+using SoftApi.Entity.Statistics;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,14 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Data.Context
+namespace SoftApi.Data.Context
 {
-    public class KodiaksDdExtentions : KodiaksDbContext
+    public class SoftDdExtentions : SoftDbContext
     {
-        public KodiaksDdExtentions()
+        public SoftDdExtentions()
         {
         }
-        public KodiaksDdExtentions(DbContextOptions<KodiaksDbContext> options)
+        public SoftDdExtentions(DbContextOptions<SoftDbContext> options)
             : base(options)
         {
 

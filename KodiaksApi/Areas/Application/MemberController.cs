@@ -1,15 +1,15 @@
 ﻿using System;
-using KodiaksApi.Core;
-using KodiaksApi.Core.Application;
-using KodiaksApi.Core.Finance;
-using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Security;
-using KodiaksApi.Util;
+using SoftApi.Core;
+using SoftApi.Core.Application;
+using SoftApi.Core.Finance;
+using SoftApi.Entity.Application;
+using SoftApi.Entity.Security;
+using SoftApi.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KodiaksApi.Areas.Application
+namespace SoftApi.Areas.Application
 {
     [Area("Application")]
     [Route("api/[area]/[controller]")]

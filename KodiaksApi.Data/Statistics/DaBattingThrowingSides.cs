@@ -1,8 +1,8 @@
-﻿using KodiaksApi.Data.Application;
-using KodiaksApi.Data.Context;
-using KodiaksApi.Entity.Application;
-using KodiaksApi.Entity.Statistics;
-using KodiaksApi.Util;
+﻿using SoftApi.Data.Application;
+using SoftApi.Data.Context;
+using SoftApi.Entity.Application;
+using SoftApi.Entity.Statistics;
+using SoftApi.Util;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KodiaksApi.Data.Statistics
+namespace SoftApi.Data.Statistics
 {
     public class DaBattingThrowingSides
     {

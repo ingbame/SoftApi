@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KodiaksApi.Controllers
+namespace SoftApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
