@@ -31,7 +31,7 @@ namespace SoftApi.Core.Statistics
         #endregion
         public async Task<List<RivalTeamEntity>> GetPosition(int? id)
         {
-            var response = await DaPosition.Instance.GetPosition(id);
+            var response = await DaRivalTeam.Instance.GetPosition(id);
             return response;
         }
     }

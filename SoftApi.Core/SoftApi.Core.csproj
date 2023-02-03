@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KodiaksApi.Data\SoftApi.Data.csproj" />
-    <ProjectReference Include="..\KodiaksApi.Entity\SoftApi.Entity.csproj" />
+    <ProjectReference Include="..\SoftApi.Data\SoftApi.Data.csproj" />
+    <ProjectReference Include="..\SoftApi.Entity\SoftApi.Entity.csproj" />
   </ItemGroup>
 
 </Project>

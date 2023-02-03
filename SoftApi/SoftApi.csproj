@@ -14,9 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KodiaksApi.Core\SoftApi.Core.csproj" />
-    <ProjectReference Include="..\KodiaksApi.Entity\SoftApi.Entity.csproj" />
-    <ProjectReference Include="..\KodiaksApi.Util\SoftApi.Util.csproj" />
+    <ProjectReference Include="..\SoftApi.Core\SoftApi.Core.csproj" />
+    <ProjectReference Include="..\SoftApi.Entity\SoftApi.Entity.csproj" />
+    <ProjectReference Include="..\SoftApi.Util\SoftApi.Util.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
