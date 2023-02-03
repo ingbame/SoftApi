@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "KodiaksApi": {
+    "SoftApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

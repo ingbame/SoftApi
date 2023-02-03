@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 //Variable para permitir conexiones externas
-var myCors = "KodiaksCors";
+var myCors = "SoftCors";
 
 // Add services to the container.
 
@@ -21,7 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "WebApi to Kodiaks Softball Team",
+        Title = "WebApi to Softball Team",
         Version = "v1",
         Description = "Esta Api es la documentación para el uso de la App",
         Contact = new OpenApiContact
