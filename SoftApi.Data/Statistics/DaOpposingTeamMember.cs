@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace SoftApi.Data.Statistics
 {
-    public class DaRivalTeam
+    public class DaOpposingTeamMember
     {
         #region Patron de Diseño Sigleton
-        private static DaRivalTeam _instance;
+        private static DaOpposingTeamMember _instance;
         private static readonly object _instanceLock = new object();
-        public static DaRivalTeam Instance
+        public static DaOpposingTeamMember Instance
         {
             get
             {
@@ -26,53 +26,53 @@ namespace SoftApi.Data.Statistics
                     lock (_instanceLock)
                     {
                         if (_instance == null)
-                            _instance = new DaRivalTeam();
+                            _instance = new DaOpposingTeamMember();
                     }
                 }
                 return _instance;
             }
         }
         #endregion
-        public async Task<List<RivalTeamEntity>> GetRivalTeam(int? id = null)
+        public async Task<List<OpposingTeamMemberEntity>> GetTeamMember(int? id = null)
         {
-            List<RivalTeamEntity> incomesLst = new List<RivalTeamEntity>();
+            List<OpposingTeamMemberEntity> incomesLst = new List<OpposingTeamMemberEntity>();
 
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 if (id.HasValue)
                 {
-                    var search = await ctx.RivalTeams.FindAsync(id);
-                    incomesLst.Add(search.CopyProperties(new RivalTeamEntity()));
+                    var search = await ctx.OpposingTeamMembers.FindAsync(id);
+                    incomesLst.Add(search.CopyProperties(new OpposingTeamMemberEntity()));
                 }
                 else
-                    incomesLst = ctx.RivalTeams.Select(s => s.CopyProperties(new RivalTeamEntity())).ToList();
+                    incomesLst = ctx.OpposingTeamMembers.Select(s => s.CopyProperties(new OpposingTeamMemberEntity())).ToList();
             }
             return incomesLst;
         }
-        public async Task<RivalTeamEntity> NewRivalTeam(RivalTeamEntity request)
+        public async Task<OpposingTeamMemberEntity> NewTeamMember(OpposingTeamMemberEntity request)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 using (var trans = ctx.Database.BeginTransaction())
                 {
-                    var dataToAdd = request.CopyProperties(new RivalTeam());
-                    await ctx.RivalTeams.AddAsync(dataToAdd);
+                    var dataToAdd = request.CopyProperties(new OpposingTeamMember());
+                    await ctx.OpposingTeamMembers.AddAsync(dataToAdd);
                     await ctx.SaveChangesAsync();
                     await trans.CommitAsync();
-                    var response = dataToAdd.CopyProperties(new RivalTeamEntity());
+                    var response = dataToAdd.CopyProperties(new OpposingTeamMemberEntity());
                     return response;
                 }
             }
         }
-        public async Task<RivalTeamEntity> EditRivalTeam(RivalTeamEntity request)
+        public async Task<OpposingTeamMemberEntity> EditTeamMember(OpposingTeamMemberEntity request)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 using (var trans = ctx.Database.BeginTransaction())
                 {
-                    var dataToUpdate = request.CopyProperties(new RivalTeam());
+                    var dataToUpdate = request.CopyProperties(new OpposingTeamMember());
                     ctx.Entry(dataToUpdate).State = EntityState.Modified;
-                    ctx.Entry(dataToUpdate).Property(x => x.RivalTeamId).IsModified = false;
+                    ctx.Entry(dataToUpdate).Property(x => x.MemberId).IsModified = false;
                     try
                     {
                         await ctx.SaveChangesAsync();
@@ -80,32 +80,32 @@ namespace SoftApi.Data.Statistics
                     }
                     catch (DbUpdateConcurrencyException) //Error al hacer el update en caso de que se elimine por otro usuario en el proceso
                     {
-                        if (!await ctx.RivalTeams.AnyAsync(e => e.RivalTeamId == request.RivalTeamId))
+                        if (!await ctx.OpposingTeamMembers.AnyAsync(e => e.MemberId == request.MemberId))
                             throw new Exception("No se pudo actualizar, el registro ya no existe.");
                         else
                             throw new Exception("No se pudo actualizar, revise la información.");
                     }
-                    var response = dataToUpdate.CopyProperties(new RivalTeamEntity());
+                    var response = dataToUpdate.CopyProperties(new OpposingTeamMemberEntity());
                     return response;
                 }
             }
         }
-        public async Task<RivalTeamEntity> DeleteRivalTeam(int? RivalTeamId)
+        public async Task<OpposingTeamMemberEntity> DeleteTeamMember(int? MemberId)
         {
             using (var ctx = new DbContextConfig().CreateDbContext())
             {
                 using (var trans = ctx.Database.BeginTransaction())
                 {
-                    var findData = await ctx.RivalTeams.FindAsync(RivalTeamId);
+                    var findData = await ctx.OpposingTeamMembers.FindAsync(MemberId);
                     if (findData != null)
                     {
-                        ctx.RivalTeams.Remove(findData);
+                        ctx.OpposingTeamMembers.Remove(findData);
                         await ctx.SaveChangesAsync();
                         await trans.CommitAsync();
                     }
                     else
                         throw new Exception("No se encuentra el valor a eliminar.");
-                    var response = findData.CopyProperties(new RivalTeamEntity());
+                    var response = findData.CopyProperties(new OpposingTeamMemberEntity());
                     return response;
                 }
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoftApi.Entity.Statistics
 {
-    public class OpposingTeamMembers
+    public class OpposingTeamMemberEntity
     {
         public int? MemberId { get; set; }
         public string MemberName { get; set; }

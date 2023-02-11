@@ -19,7 +19,7 @@ namespace SoftApi.Areas.Statistics
             try
             {
                 var searchResult = await BoBattingThrowingSides.Instance.GetBattingThrowingSides(id);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, Response = searchResult });
             }
             catch (Exception ex)

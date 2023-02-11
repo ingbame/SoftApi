@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SoftApi.Util
 {
-    public static class Extensions
+    public static class SoftExtentions
     {
         public static TCopy CopyProperties<TSource, TCopy>(this TSource source, TCopy copy)
         {

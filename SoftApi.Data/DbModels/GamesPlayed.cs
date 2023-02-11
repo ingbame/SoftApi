@@ -7,8 +7,7 @@ namespace SoftApi.Data.DbModels
     {
         public GamesPlayed()
         {
-            DetailOfOurGamePlayeds = new HashSet<DetailOfOurGamePlayed>();
-            DetailOfTheRivalGamePlayeds = new HashSet<DetailOfTheRivalGamePlayed>();
+            DetailOfGamePlayeds = new HashSet<DetailOfGamePlayed>();
         }
 
         public int GameId { get; set; }
@@ -17,7 +16,6 @@ namespace SoftApi.Data.DbModels
         public bool WeWon { get; set; }
 
         public virtual RivalTeam RivalTeam { get; set; }
-        public virtual ICollection<DetailOfOurGamePlayed> DetailOfOurGamePlayeds { get; set; }
-        public virtual ICollection<DetailOfTheRivalGamePlayed> DetailOfTheRivalGamePlayeds { get; set; }
+        public virtual ICollection<DetailOfGamePlayed> DetailOfGamePlayeds { get; set; }
     }
 }

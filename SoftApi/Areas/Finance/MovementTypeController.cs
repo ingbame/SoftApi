@@ -18,7 +18,7 @@ namespace SoftApi.Areas.Finance
             try
             {
                 var searchResult = await BoMovementType.Instance.GetMovementType(id);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)

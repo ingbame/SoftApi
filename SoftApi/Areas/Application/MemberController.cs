@@ -23,7 +23,7 @@ namespace SoftApi.Areas.Application
             try
             {
                 var searchResult = await BoMember.Instance.GetMember(id);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)
@@ -40,7 +40,7 @@ namespace SoftApi.Areas.Application
             try
             {
                 var personaResult = await BoMember.Instance.CreateMember(request);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = personaResult });
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace SoftApi.Areas.Application
             try
             {
                 var result = await BoMember.Instance.EditMember(id, request);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = result });
             }
             catch (Exception ex)

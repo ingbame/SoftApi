@@ -17,7 +17,7 @@ namespace SoftApi.Areas.Application
             try
             {
                 var searchResult = await BoRole.Instance.GetRole(id);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)

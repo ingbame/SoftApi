@@ -11,10 +11,11 @@ namespace SoftApi.Entity.Statistics
     {
         public GamePlayedRivalDetailEntity()
         {
-            Member = new OpposingTeamMembers();
+            Member = new OpposingTeamMemberEntity();
         }
         public long? RivalDetailId { get; set; }
         public int? MemberId { get; set; }
-        public OpposingTeamMembers Member { get; set; }
+        public OpposingTeamMemberEntity Member { get; set; }
+        public int? Inning { get; set; }
     }
 }

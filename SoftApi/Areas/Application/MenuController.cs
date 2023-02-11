@@ -19,7 +19,7 @@ namespace SoftApi.Areas.Application
             var menu = BoApplication.Instance.GetMenu(currentUser.User.RoleDescription);
             if (menu.Error)
                 return BadRequest(menu.Message);
-            var token = Extensions.RefreshLoginToken(User.Claims);
+            var token = SoftExtentions.RefreshLoginToken(User.Claims);
             return Ok(new { token, response = menu.Model });
         }
         #region Private Methods

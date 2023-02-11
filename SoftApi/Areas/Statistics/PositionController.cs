@@ -15,7 +15,7 @@ namespace SoftApi.Areas.Statistics
             try
             {
                 var searchResult = await BoPosition.Instance.GetPosition(id);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = searchResult });
             }
             catch (Exception ex)

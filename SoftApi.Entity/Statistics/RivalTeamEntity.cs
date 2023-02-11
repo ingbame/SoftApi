@@ -9,7 +9,7 @@ namespace SoftApi.Entity.Statistics
     public class RivalTeamEntity
     {
         public int? RivalTeamId { get; set; }
-        public int? TeamName { get; set; }
+        public string TeamName { get; set; }
         public bool? IsActive { get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace SoftApi.Entity.Statistics
         public long? OurDetailId { get; set; }
         public long? MemberId { get; set; }
         public MemberEntity Member { get; set; }
+        public int? Inning { get; set; }
     }
 }

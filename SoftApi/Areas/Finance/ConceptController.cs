@@ -18,7 +18,7 @@ namespace SoftApi.Areas.Finance
             try
             {
                 var searchResult = await BoConcept.Instance.GetConcept(id);
-                var token = Extensions.RefreshLoginToken(User.Claims);
+                var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, Response = searchResult });
             }
             catch (Exception ex)

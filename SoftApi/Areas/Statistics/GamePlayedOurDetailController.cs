@@ -1,23 +1,21 @@
-﻿using SoftApi.Core.Finance;
-using SoftApi.Entity.Finance;
-using SoftApi.Util;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SoftApi.Core.Statistics;
+using SoftApi.Entity.Statistics;
+using SoftApi.Util;
 
-namespace SoftApi.Areas.Finance
+namespace SoftApi.Areas.Statistics
 {
-    [Area("Finance")]
-    [Route("api/[area]/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class MovementController : ControllerBase
+    [Area("Statistics"), Route("api/[area]/[controller]"), ApiController, Authorize]
+    public class GamePlayedOurDetailController : ControllerBase
     {
         [HttpGet()]
-        public async Task<ActionResult> Get(long? id = null, int? year = null, int? month = null)
+        public async Task<ActionResult> Get(int? id = null)
         {
             try
             {
-                var searchResult = await BoMovement.Instance.GetMovement(id, year, month);
+                var searchResult = await BoGamePlayedOurDetail.Instance.GetGamePlayedOurDetail(id);
                 var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = searchResult });
             }
@@ -29,29 +27,12 @@ namespace SoftApi.Areas.Finance
                 return BadRequest(message);
             }
         }
-        [HttpGet("GetByYearMonth")]
-        public async Task<ActionResult> Get(int? year, int? month)
+        [HttpGet("GetByGame")]
+        public async Task<ActionResult> GetByGame(int? id = null)
         {
             try
             {
-                var searchResult = await BoMovement.Instance.GetMovementByMonthYear(year, month);
-                var token = SoftExtentions.RefreshLoginToken(User.Claims);
-                return Ok(new { token, response = searchResult });
-            }
-            catch (Exception ex)
-            {
-                var message = ex.Message;
-                if (ex.InnerException != null)
-                    message = ex.InnerException.Message;
-                return BadRequest(message);
-            }
-        }
-        [HttpGet("Total")]
-        public async Task<ActionResult> GetTotal()
-        {
-            try
-            {
-                var searchResult = await BoMovement.Instance.GetTotal();
+                var searchResult = await BoGamePlayedOurDetail.Instance.GetGamePlayedOurDetail(id);
                 var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = searchResult });
             }
@@ -65,11 +46,11 @@ namespace SoftApi.Areas.Finance
         }
         [HttpPost()]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public async Task<ActionResult> Post(MovementEntity request)
+        public async Task<ActionResult> Post(GamePlayedOurDetailEntity request)
         {
             try
             {
-                var incomeResult = await BoMovement.Instance.NewMovement(request);
+                var incomeResult = await BoGamePlayedOurDetail.Instance.NewGamePlayedOurDetail(request);
                 var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = incomeResult });
             }
@@ -82,12 +63,12 @@ namespace SoftApi.Areas.Finance
             }
         }
         [HttpPut()]
-        [Authorize(Roles = "SuperAdmin")]
-        public async Task<ActionResult> Put(long? id, MovementEntity request)
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public async Task<ActionResult> Put(long? id, GamePlayedOurDetailEntity request)
         {
             try
             {
-                var incomeResult = await BoMovement.Instance.EditMovement(id, request);
+                var incomeResult = await BoGamePlayedOurDetail.Instance.EditGamePlayedOurDetail(id, request);
                 var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = incomeResult });
             }
@@ -101,11 +82,11 @@ namespace SoftApi.Areas.Finance
         }
         [HttpDelete()]
         [Authorize(Roles = "SuperAdmin")]
-        public async Task<ActionResult> Delete(MovementEntity request)
+        public async Task<ActionResult> Delete(GamePlayedOurDetailEntity request)
         {
             try
             {
-                var incomeResult = await BoMovement.Instance.DeleteMovement(request);
+                var incomeResult = await BoGamePlayedOurDetail.Instance.DeleteGamePlayedOurDetail(request);
                 var token = SoftExtentions.RefreshLoginToken(User.Claims);
                 return Ok(new { token, response = incomeResult });
 

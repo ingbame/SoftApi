@@ -1,4 +1,5 @@
-﻿using SoftApi.Data.Finance;
+﻿using SoftApi.Data.DbModels;
+using SoftApi.Data.Finance;
 using SoftApi.Data.Security;
 using SoftApi.Data.Statistics;
 using SoftApi.Entity.Finance;
@@ -11,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace SoftApi.Core.Statistics
 {
-    public class BoRivalTeam
+    public class BoOpposingTeamMember
     {
         #region Patron de Diseño
-        private static BoRivalTeam _instance;
+        private static BoOpposingTeamMember _instance;
         private static readonly object _instanceLock = new object();
-        public static BoRivalTeam Instance
+        public static BoOpposingTeamMember Instance
         {
             get
             {
@@ -25,55 +26,55 @@ namespace SoftApi.Core.Statistics
                     lock (_instanceLock)
                     {
                         if (_instance == null)
-                            _instance = new BoRivalTeam();
+                            _instance = new BoOpposingTeamMember();
                     }
                 }
                 return _instance;
             }
         }
         #endregion
-        public async Task<List<RivalTeamEntity>> GetRivalTeam(int? id)
+        public async Task<List<OpposingTeamMemberEntity>> GetTeamMember(int? id)
         {
-            var response = await DaRivalTeam.Instance.GetRivalTeam(id);
+            var response = await DaOpposingTeamMember.Instance.GetTeamMember(id);
             return response;
         }
-        public async Task<RivalTeamEntity> NewRivalTeam(RivalTeamEntity request)
+        public async Task<OpposingTeamMemberEntity> NewTeamMember(OpposingTeamMemberEntity request)
         {
             if (request == null)
                 throw new Exception("No se ha ingresado información");
 
-            isValidRivalTeamModel(request);
-            var response = await DaRivalTeam.Instance.NewRivalTeam(request);
+            isValidTeamMemberModel(request);
+            var response = await DaOpposingTeamMember.Instance.NewTeamMember(request);
             return response;
         }
 
-        public void isValidRivalTeamModel(RivalTeamEntity request)
+        public void isValidTeamMemberModel(OpposingTeamMemberEntity request)
         {
-            if (string.IsNullOrEmpty(request.TeamName?.Trim() ?? null))
+            if (string.IsNullOrEmpty(request.MemberName?.Trim() ?? null))
                 throw new Exception("Es necesario nombre del Equipo para guardar.");
 
-            if (!request.IsActive.HasValue)
-                throw new Exception("Debe de seleccionar si el equipo está activo.");
+            if (!request.IsPitcher.HasValue)
+                throw new Exception("Debe de seleccionar si el es pitcher o no.");
         }
-        public async Task<RivalTeamEntity> EditRivalTeam(long? id, RivalTeamEntity request)
+        public async Task<OpposingTeamMemberEntity> EditTeamMember(long? id, OpposingTeamMemberEntity request)
         {
             if (!id.HasValue)
                 throw new Exception("Debe de inluir id con la petición.");
             if (request == null)
                 throw new Exception("No se ha ingresado información");
-            if (id != request.RivalTeamId)
+            if (id != request.MemberId)
                 throw new Exception("Debe de coincidir el id del Eqipo para editar con la petición.");
-            isValidRivalTeamModel(request);
-            var response = await DaRivalTeam.Instance.EditRivalTeam(request);
+            isValidTeamMemberModel(request);
+            var response = await DaOpposingTeamMember.Instance.EditTeamMember(request);
             return response;
         }
-        public async Task<RivalTeamEntity> DeleteRivalTeam(RivalTeamEntity request)
+        public async Task<OpposingTeamMemberEntity> DeleteTeamMember(OpposingTeamMemberEntity request)
         {
             if (request == null)
                 throw new Exception("No se ha ingresado información");
-            if (!request.RivalTeamId.HasValue || request.RivalTeamId <= 0)
+            if (!request.MemberId.HasValue || request.MemberId <= 0)
                 throw new Exception("Debe de tener un Id la entrada que desea manipular.");
-            var response = await DaRivalTeam.Instance.DeleteRivalTeam(request.RivalTeamId);
+            var response = await DaOpposingTeamMember.Instance.DeleteTeamMember(request.MemberId);
             return response;
         }
     }

@@ -20,6 +20,7 @@ namespace SoftApi.Data.Context
         public virtual DbSet<AssignRoleMenu> AssignRoleMenus { get; set; }
         public virtual DbSet<BattingThrowingSide> BattingThrowingSides { get; set; }
         public virtual DbSet<Concept> Concepts { get; set; }
+        public virtual DbSet<DetailOfGamePlayed> DetailOfGamePlayeds { get; set; }
         public virtual DbSet<DetailOfOurGamePlayed> DetailOfOurGamePlayeds { get; set; }
         public virtual DbSet<DetailOfTheRivalGamePlayed> DetailOfTheRivalGamePlayeds { get; set; }
         public virtual DbSet<GamesPlayed> GamesPlayeds { get; set; }
@@ -110,6 +111,24 @@ namespace SoftApi.Data.Context
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<DetailOfGamePlayed>(entity =>
+            {
+                entity.HasKey(e => e.DetailId)
+                    .HasName("PK_Stats_GamePlayedDetail_DetailId");
+
+                entity.ToTable("DetailOfGamePlayed", "Stats");
+
+                entity.Property(e => e.CenterValue)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.DetailOfGamePlayeds)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Stats_DetailOfOurGamePlayed_GameId");
+            });
+
             modelBuilder.Entity<DetailOfOurGamePlayed>(entity =>
             {
                 entity.HasKey(e => e.OurDetailId)
@@ -120,15 +139,11 @@ namespace SoftApi.Data.Context
                 entity.HasIndex(e => new { e.Inning, e.MemberId }, "PK_Stats_DetailOfOurGamePlayed_Inning_MemberId")
                     .IsUnique();
 
-                entity.Property(e => e.CenterValue)
-                    .HasMaxLength(4)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Game)
+                entity.HasOne(d => d.Detail)
                     .WithMany(p => p.DetailOfOurGamePlayeds)
-                    .HasForeignKey(d => d.GameId)
+                    .HasForeignKey(d => d.DetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Stats_DetailOfOurGamePlayed_GameId");
+                    .HasConstraintName("FK_Stats_DetailOfOurGamePlayed_DetailId");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.DetailOfOurGamePlayeds)
@@ -147,15 +162,11 @@ namespace SoftApi.Data.Context
                 entity.HasIndex(e => new { e.Inning, e.MemberId }, "PK_Stats_DetailOfTheRivalGamePlayed_Inning_MemberId")
                     .IsUnique();
 
-                entity.Property(e => e.CenterValue)
-                    .HasMaxLength(4)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Game)
+                entity.HasOne(d => d.Detail)
                     .WithMany(p => p.DetailOfTheRivalGamePlayeds)
-                    .HasForeignKey(d => d.GameId)
+                    .HasForeignKey(d => d.DetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Stats_DetailOfTheRivalGamePlayed_GameId");
+                    .HasConstraintName("FK_Stats_DetailOfTheRivalGamePlayed_DetailId");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.DetailOfTheRivalGamePlayeds)
